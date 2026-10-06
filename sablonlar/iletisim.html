@@ -1,0 +1,37 @@
+<bz:sablon baslik="İletişim" sira="9" schema="ContactPage" />
+<bz:dahil dosya="parcalar/ust" />
+
+<section class="kap bolum iki-kolon">
+    <div>
+        <bz:ekmek-kirintisi />
+        <h1><bz:alan ad="baslik" etiket="Başlık">Bize ulaşın</bz:alan></h1>
+        <p class="giris"><bz:alan ad="aciklama" tur="uzunmetin" etiket="Açıklama">Sorularınızı yanıtlamaktan memnuniyet duyarız. Formu doldurun, en geç bir iş günü içinde dönüş yapalım.</bz:alan></p>
+        <ul class="iletisim-liste">
+            <bz:eger kosul="genel.telefon"><li>📞 <a href="{{ genel.telefon | tel_link }}">{{ genel.telefon }}</a></li></bz:eger>
+            <bz:eger kosul="genel.eposta"><li>✉️ <a href="mailto:{{ genel.eposta }}">{{ genel.eposta }}</a></li></bz:eger>
+            <bz:eger kosul="genel.adres"><li>📍 {{ genel.adres | satirlar }}</li></bz:eger>
+            <bz:eger kosul="calisma_saatleri"><li>🕘 <bz:alan ad="calisma_saatleri" etiket="Çalışma saatleri">Hafta içi 09:00 – 18:00</bz:alan></li></bz:eger>
+        </ul>
+    </div>
+    <div class="form-kutu">
+        <bz:form ad="iletisim" zorunlu="ad_soyad,eposta,mesaj" konu="Web sitesinden yeni mesaj" basari="Teşekkürler! Mesajınız bize ulaştı, kısa süre içinde dönüş yapacağız.">
+            <label>Ad Soyad <input type="text" name="ad_soyad" value="{{ form.eski.ad_soyad }}" required autocomplete="name"></label>
+            <label>E-posta <input type="email" name="eposta" value="{{ form.eski.eposta }}" required autocomplete="email"></label>
+            <label>Telefon <input type="tel" name="telefon" value="{{ form.eski.telefon }}" placeholder="05xx xxx xx xx" autocomplete="tel"></label>
+            <label>Konu
+                <select name="konu">
+                    <option>Genel bilgi</option><option>Teklif talebi</option><option>Destek</option><option>Diğer</option>
+                </select>
+            </label>
+            <label>Mesajınız <textarea name="mesaj" rows="5" required>{{ form.eski.mesaj }}</textarea></label>
+            <bz:kvkk-onay />
+            <button class="dugme" type="submit">Gönder</button>
+        </bz:form>
+    </div>
+</section>
+
+<section class="kap bolum">
+    <bz:alan ad="harita" tur="harita" etiket="Harita adresi" yardim="Örn: Kızılay, Ankara — Google Haritalar'da gösterilir">Kızılay Meydanı, Çankaya, Ankara</bz:alan>
+</section>
+
+<bz:dahil dosya="parcalar/alt" />

@@ -1,0 +1,39 @@
+name: Hata bildirimi
+description: Bir şey beklendiği gibi çalışmıyor
+labels: ["hata"]
+body:
+  - type: textarea
+    id: ne
+    attributes:
+      label: "Ne oldu?"
+      description: "Kısaca sorunu anlatın."
+    validations:
+      required: true
+  - type: textarea
+    id: adimlar
+    attributes:
+      label: "Nasıl tekrarlanır?"
+      placeholder: "1. Panelde …\n2. …"
+    validations:
+      required: true
+  - type: textarea
+    id: beklenen
+    attributes:
+      label: "Ne bekliyordunuz?"
+  - type: input
+    id: surum
+    attributes:
+      label: "BOZKURT sürümü"
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: ortam
+    attributes:
+      label: "Ortam"
+      placeholder: "PHP 8.2 · Hostinger Premium · SQLite"
+  - type: textarea
+    id: gunluk
+    attributes:
+      label: "veri/hatalar.log son satırları"
+      render: text

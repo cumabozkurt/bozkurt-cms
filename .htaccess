@@ -1,0 +1,45 @@
+# BOZKURT CMS — Apache / LiteSpeed (Hostinger, Natro, Turhost, Güzel Hosting vb.)
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Alt klasöre kurduysanız: RewriteBase /altklasor/
+    RewriteBase /
+
+    # HTTPS'e yönlendir (SSL etkinse yorum satırını kaldırın)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Korunan klasörler
+    RewriteRule ^(veri|bozkurt|sablonlar|testler|bin|docs|\.github)(/|$) - [F,L]
+    RewriteRule ^(yonlendirici\.php|composer\.json|nginx\.conf\.ornek|phpstan\.neon\.dist)$ - [F,L]
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    # Sunucudaki gerçek .md/.json/.lock dosyaları servis edilmez (sanal /sayfa.md adresleri çalışır)
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule \.(md|json|lock|dist|ornek|yml)$ - [F,L]
+
+    # API/MCP anahtarı için Authorization başlığını PHP'ye ilet (bazı paylaşımlı hostinglerde gerekli)
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    <FilesMatch "\.(css|js|svg|woff2?|webp|avif|jpe?g|png|gif|ico)$">
+        Header set Cache-Control "public, max-age=2592000, immutable"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/xml text/plain
+</IfModule>
+
+<FilesMatch "\.(sqlite|sqlite-wal|sqlite-shm|log|kilit|sql)$">
+    Require all denied
+</FilesMatch>

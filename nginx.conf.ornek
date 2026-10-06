@@ -1,0 +1,6 @@
+# BOZKURT CMS — Nginx örneği (VPS)
+location ~ ^/(veri|bozkurt|sablonlar|testler|bin|docs|\.github)/ { deny all; }
+location ~ /\.(?!well-known/) { deny all; }
+location ~* ^/yuklemeler/.*\.(php|phtml|phar)$ { deny all; }
+location / { try_files $uri $uri/ /index.php?$query_string; }
+location /yonetim/ { try_files $uri $uri/ /yonetim/index.php?$query_string; }

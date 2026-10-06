@@ -1,0 +1,19 @@
+<bz:sablon baslik="Arama" menude="hayir" sitemap="hayir" noindex="evet" llms="hayir" sira="99" />
+<bz:dahil dosya="parcalar/ust" />
+
+<section class="kap dar bolum">
+    <h1>Arama</h1>
+    <bz:arama-formu sinif="buyuk-arama" />
+    <bz:liste sablon="*" arama="evet" limit="20" sayfalama="evet">
+        <bz:eger kosul="ilk"><p class="ust-bilgi">“{{ istek.q }}” için {{ liste.toplam }} sonuç</p></bz:eger>
+        <article class="arama-sonuc">
+            <h2><a href="{{ oge.url }}">{{ oge.baslik }}</a></h2>
+            <p>{{ oge.ozet | kisalt:200 }}</p>
+        </article>
+    <bz:yoksa/>
+        <bz:eger kosul="istek.q"><p class="bos">“{{ istek.q }}” için sonuç bulunamadı.</p></bz:eger>
+    </bz:liste>
+    <bz:sayfalama />
+</section>
+
+<bz:dahil dosya="parcalar/alt" />

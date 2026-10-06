@@ -1,0 +1,131 @@
+/* BOZKURT CMS — örnek tema "Bozkır". Dilediğiniz gibi değiştirin ya da kendi HTML/CSS'inizi kullanın. */
+:root{--k:#b91c1c;--k2:#7f1d1d;--z:#fffdf9;--y:#ffffff;--c:#ece7df;--m:#1c1917;--s:#6b625a;--r:16px;--f:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--z);color:var(--m);font:17px/1.7 var(--f);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto}
+a{color:var(--k)}
+h1,h2,h3{line-height:1.2;letter-spacing:-.02em}
+h1{font-size:clamp(2rem,4vw,3.2rem);margin:.2em 0 .4em}
+.kap{max-width:1160px;margin:0 auto;padding:0 24px}
+.kap.dar{max-width:760px}
+.atla{position:absolute;left:-999px}.atla:focus{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:9}
+.ust{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--z) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--c)}
+.ust-ic{display:flex;align-items:center;gap:24px;height:72px}
+.logo{font-weight:800;font-size:1.15rem;text-decoration:none;color:var(--m);display:flex;align-items:center;gap:8px}
+.logo-isaret{font-size:1.4rem}
+.ana-menu{margin-left:auto;display:flex;align-items:center;gap:20px}
+.menu{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.menu a{display:block;padding:8px 14px;border-radius:99px;text-decoration:none;color:var(--s);font-weight:500;font-size:.95rem}
+.menu a:hover{color:var(--m);background:var(--c)}
+.menu a.aktif{color:var(--k);background:#fdecec}
+.ust-arama{display:flex}
+.ust-arama input{border:1px solid var(--c);border-radius:99px 0 0 99px;padding:7px 14px;font:inherit;font-size:.9rem;width:160px;background:var(--y)}
+.ust-arama button{border:1px solid var(--c);border-left:0;border-radius:0 99px 99px 0;background:var(--y);padding:0 14px;cursor:pointer;font:inherit;font-size:.9rem}
+.menu-dugme{display:none;margin-left:auto;font-size:1.6rem;cursor:pointer}
+.kahraman{padding:72px 0 56px;background:radial-gradient(900px 400px at 85% 0%,#fde2e2,transparent),var(--z)}
+.kahraman-ic{display:grid;grid-template-columns:minmax(0,820px);gap:48px;align-items:center}
+.kahraman-ic:has(.kahraman-resim){grid-template-columns:1.1fr .9fr}
+.kahraman-resim{border-radius:24px;box-shadow:0 30px 60px -20px rgba(127,29,29,.35)}
+.rozet{display:inline-block;background:#fdecec;color:var(--k);font-weight:600;font-size:.85rem;padding:6px 14px;border-radius:99px}
+.giris{font-size:1.2rem;color:var(--s);max-width:40em}
+.dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.dugme{display:inline-block;background:var(--k);color:#fff;text-decoration:none;font-weight:600;padding:13px 24px;border-radius:12px;border:0;cursor:pointer;font:600 1rem var(--f);transition:.15s}
+.dugme:hover{background:var(--k2);transform:translateY(-1px)}
+.dugme.ikincil{background:var(--y);color:var(--m);border:1px solid var(--c)}
+.bolum{padding:56px 24px}
+.bolum-ust{display:flex;justify-content:space-between;align-items:baseline}
+.bolum-baslik{font-size:1.8rem;margin:0 0 24px}
+.kartlar{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.kart{background:var(--y);border:1px solid var(--c);border-radius:var(--r);padding:28px}
+.kart h3{margin:.4em 0}
+.kart p{color:var(--s);margin:0}
+.kart-ikon{font-size:2rem}
+.kart.ekip{text-align:center}.kart.ekip img{border-radius:50%;object-fit:cover}
+.yazilar{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.yazi-kart{background:var(--y);border:1px solid var(--c);border-radius:var(--r);overflow:hidden;transition:.2s}
+.yazi-kart:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(0,0,0,.2)}
+.yazi-kart img{display:block;width:100%;aspect-ratio:600/380;object-fit:cover}
+.yazi-kart-ic{padding:20px 22px}
+.yazi-kart h2,.yazi-kart h3{font-size:1.2rem;margin:.3em 0}
+.yazi-kart h2 a,.yazi-kart h3 a{color:var(--m);text-decoration:none}
+.yazi-kart p{color:var(--s);margin:0;font-size:.95rem}
+.ust-bilgi{color:var(--s);font-size:.85rem;font-weight:500}
+.bos{color:var(--s)}
+.yazi{padding:40px 24px 24px}
+.yazar{color:var(--s)}
+.yazi-kapak{border-radius:var(--r);margin:16px 0 28px;width:100%}
+.metin h2{margin-top:1.8em}.metin img{border-radius:12px}
+.metin blockquote{border-left:4px solid var(--k);margin:1.5em 0;padding:.3em 1.2em;color:var(--s);font-style:italic}
+.metin pre{background:#1c1917;color:#f5f5f4;padding:16px;border-radius:12px;overflow:auto;font-size:.9rem}
+.metin code{background:#f3eee8;padding:.1em .4em;border-radius:6px;font-size:.9em}
+.metin pre code{background:none;padding:0}
+.metin iframe{max-width:100%;border-radius:12px}
+.bz-icindekiler{background:var(--y);border:1px solid var(--c);border-radius:12px;padding:16px 20px;margin:0 0 24px;font-size:.95rem}
+.bz-icindekiler ul{margin:8px 0 0;padding-left:18px}.bz-icindekiler .h3{margin-left:16px}
+.paylas{display:flex;gap:12px;align-items:center;margin:32px 0;padding-top:20px;border-top:1px solid var(--c);color:var(--s);font-size:.95rem}
+.bz-kirinti ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0 0 8px;font-size:.85rem;color:var(--s)}
+.bz-kirinti li+li::before{content:"›";margin-right:6px}
+.bz-kirinti a{color:var(--s);text-decoration:none}
+.bz-sayfalama ul{display:flex;gap:6px;justify-content:center;list-style:none;padding:0;margin:40px 0 0}
+.bz-sayfalama a,.bz-sayfalama span{display:block;padding:8px 14px;border-radius:10px;border:1px solid var(--c);text-decoration:none;color:var(--m);background:var(--y)}
+.bz-sayfalama [aria-current]{background:var(--k);color:#fff;border-color:var(--k)}
+.filtreler{color:var(--s)}
+.iki-kolon{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.iletisim-liste{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.form-kutu{background:var(--y);border:1px solid var(--c);border-radius:20px;padding:28px}
+.bz-form{display:flex;flex-direction:column;gap:14px}
+.bz-form label{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.95rem}
+.bz-form input,.bz-form textarea,.bz-form select{font:inherit;padding:11px 14px;border:1px solid var(--c);border-radius:10px;background:var(--z)}
+.bz-form input:focus,.bz-form textarea:focus,.bz-form select:focus{outline:2px solid var(--k);outline-offset:1px}
+.bz-kvkk-onay{flex-direction:row!important;align-items:flex-start;gap:10px!important;font-weight:400!important;font-size:.88rem!important;color:var(--s)}
+.bz-kvkk-onay input{margin-top:5px;accent-color:var(--k)}
+.bz-form-basari,.bz-form-hata{padding:14px 18px;border-radius:12px;margin-bottom:16px}
+.bz-form-basari{background:#dcfce7;color:#166534}
+.bz-form-hata{background:#fee2e2;color:#991b1b}.bz-form-hata ul{margin:0;padding-left:18px}
+.bz-harita{border-radius:var(--r)}
+.buyuk-arama{display:flex;gap:8px;margin:16px 0 28px}
+.buyuk-arama input{flex:1;font:inherit;padding:12px 16px;border:1px solid var(--c);border-radius:12px}
+.buyuk-arama button{font:600 1rem var(--f);background:var(--k);color:#fff;border:0;border-radius:12px;padding:0 22px;cursor:pointer}
+.arama-sonuc{padding:18px 0;border-bottom:1px solid var(--c)}.arama-sonuc h2{font-size:1.2rem;margin:0 0 4px}
+.bulunamadi{text-align:center}.dev{font-size:6rem;font-weight:800;color:var(--k);margin:0;line-height:1}
+.alt{background:#1c1917;color:#d6d3d1;margin-top:64px;padding:56px 0 24px;font-size:.95rem}
+.alt a{color:#fca5a5}
+.alt-ic{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px}
+.alt strong{color:#fff}
+.sosyal{display:flex;gap:14px;flex-wrap:wrap}
+.alt-son{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid #292524;margin-top:32px;padding-top:20px;font-size:.85rem;color:#a8a29e}
+.wp-sabit{position:fixed;left:18px;bottom:18px;width:54px;height:54px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:1.6rem;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,.25);z-index:50}
+@media (max-width:860px){
+  .kahraman-ic,.iki-kolon{grid-template-columns:1fr}
+  .menu-dugme{display:block}
+  .ana-menu{display:none;position:absolute;top:72px;left:0;right:0;background:var(--z);flex-direction:column;align-items:stretch;padding:16px 24px;border-bottom:1px solid var(--c)}
+  #menu-ac:checked~.ana-menu{display:flex}
+  .menu{flex-direction:column}
+  .ust-arama input{width:100%}
+}
+/* Çok dil, bloklar, ödeme, YZ */
+.diller{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.diller a{display:block;padding:6px 9px;border-radius:8px;text-decoration:none;color:var(--s);font-size:.8rem;font-weight:700}
+.diller a.aktif{background:var(--m);color:#fff}
+.blog-duzen{display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:start}
+.blog-yan{position:sticky;top:96px;font-size:.95rem}
+.blog-yan h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--s);margin:0 0 8px}
+.blog-yan ul{list-style:none;padding:0;margin:0 0 24px}
+.blog-yan li{padding:4px 0}.blog-yan a{color:var(--m);text-decoration:none}.blog-yan a.aktif{color:var(--k);font-weight:700}
+.blog-yan span{color:var(--s);font-size:.85rem}
+.sss details{background:var(--y);border:1px solid var(--c);border-radius:12px;padding:16px 20px;margin-bottom:10px}
+.sss summary{cursor:pointer;font-weight:600}
+.fiyat{font-size:1.2rem;color:var(--k)}
+.buyuk-alinti{font-size:1.4rem;border-left:4px solid var(--k);padding-left:20px;margin:32px 0}
+.buyuk-alinti cite{display:block;font-size:.95rem;color:var(--s);margin-top:8px;font-style:normal}
+.blok-gorsel{margin:32px 0}.blok-gorsel img{border-radius:var(--r);width:100%}.blok-gorsel figcaption{color:var(--s);font-size:.9rem;margin-top:8px}
+.cagri{background:linear-gradient(135deg,#7f1d1d,#b91c1c);color:#fff;border-radius:20px;padding:32px;margin:32px 0;text-align:center}
+.cagri h3{margin-top:0}.cagri .dugme{background:#fff;color:var(--k)}
+.bz-odeme{display:flex;flex-direction:column;gap:12px;background:var(--y);border:1px solid var(--c);border-radius:20px;padding:24px;margin:32px 0}
+.bz-odeme label{display:flex;flex-direction:column;gap:6px;font-weight:500}
+.bz-odeme input{font:inherit;padding:11px 14px;border:1px solid var(--c);border-radius:10px}
+.bz-odeme button{font:600 1rem var(--f);background:var(--k);color:#fff;border:0;border-radius:12px;padding:14px;cursor:pointer}
+.bz-odeme-tutar{font-size:1.6rem;font-weight:800;margin:0}
+.bz-iys-onay{display:flex;gap:10px;font-size:.88rem;color:var(--s)}
+@media (max-width:860px){.blog-duzen{grid-template-columns:1fr}.blog-yan{position:static}}

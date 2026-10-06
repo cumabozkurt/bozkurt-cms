@@ -1,0 +1,57 @@
+<bz:sablon baslik="Ana Sayfa" sira="1" ikon="ev" />
+<bz:dahil dosya="parcalar/ust" />
+
+<section class="kahraman">
+    <div class="kap kahraman-ic">
+        <div>
+            <span class="rozet"><bz:alan ad="rozet" etiket="Üst etiket" grup="Karşılama">Yeni nesil, Türkçe CMS</bz:alan></span>
+            <h1><bz:alan ad="baslik" etiket="Büyük başlık" grup="Karşılama" zorunlu="evet">Web sitenizi dakikalar içinde yönetilebilir yapın</bz:alan></h1>
+            <p class="giris"><bz:alan ad="alt_baslik" tur="uzunmetin" etiket="Alt başlık" grup="Karşılama">HTML tasarımınıza birkaç etiket ekleyin; gerisini BOZKURT halletsin. Paylaşımlı hostingde uçar, Türkçe düşünür.</bz:alan></p>
+            <p class="dugmeler">
+                <a class="dugme" href="{{ buton_link | varsayilan:"/iletisim" }}"><bz:alan ad="buton_metin" etiket="Buton metni" grup="Karşılama">Bize ulaşın</bz:alan></a>
+                <a class="dugme ikincil" href="{{ site.onek }}blog">Blog'u okuyun</a>
+            </p>
+            <bz:alan ad="buton_link" tur="url" etiket="Buton bağlantısı" grup="Karşılama" goster="hayir" />
+        </div>
+        <bz:eger kosul="kahraman_resim">
+            <img class="kahraman-resim" src="{{ kahraman_resim | resim:"720x540" }}" alt="{{ baslik }}" width="720" height="540">
+        </bz:eger>
+        <bz:alan ad="kahraman_resim" tur="resim" etiket="Karşılama görseli" grup="Karşılama" goster="hayir" />
+    </div>
+</section>
+
+<section class="kap bolum">
+    <h2 class="bolum-baslik"><bz:alan ad="ozellik_baslik" etiket="Özellikler başlığı" grup="Özellikler">Neden biz?</bz:alan></h2>
+    <div class="kartlar">
+        <bz:tekrar ad="ozellikler" etiket="Özellik kartları" grup="Özellikler">
+            <article class="kart">
+                <div class="kart-ikon"><bz:alan ad="ikon" etiket="Emoji / ikon" /></div>
+                <h3><bz:alan ad="baslik" etiket="Başlık" /></h3>
+                <p><bz:alan ad="aciklama" tur="uzunmetin" etiket="Açıklama" /></p>
+            </article>
+        </bz:tekrar>
+    </div>
+</section>
+
+<section class="kap bolum">
+    <div class="bolum-ust">
+        <h2 class="bolum-baslik">Son yazılar</h2>
+        <a href="{{ site.onek }}blog">Tümü →</a>
+    </div>
+    <div class="yazilar">
+        <bz:liste sablon="blog" limit="3">
+            <article class="yazi-kart">
+                <bz:eger kosul="oge.kapak"><a href="{{ oge.url }}"><img src="{{ oge.kapak | resim:"600x380" }}" alt="{{ oge.baslik }}" loading="lazy" width="600" height="380"></a></bz:eger>
+                <div class="yazi-kart-ic">
+                    <span class="ust-bilgi">{{ oge.kategori }} · {{ oge.tarih | tarih:"d F Y" }}</span>
+                    <h3><a href="{{ oge.url }}">{{ oge.baslik }}</a></h3>
+                    <p>{{ oge.ozet | kisalt:120 }}</p>
+                </div>
+            </article>
+        <bz:yoksa/>
+            <p class="bos">Henüz yazı yok. Yönetim panelinden ilk yazınızı ekleyin.</p>
+        </bz:liste>
+    </div>
+</section>
+
+<bz:dahil dosya="parcalar/alt" />

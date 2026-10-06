@@ -1,0 +1,48 @@
+name: Denetim
+on: [push, pull_request]
+jobs:
+  php:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.1', '8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_sqlite, mbstring, gd, zip, dom, fileinfo, curl
+          tools: phpstan
+      - name: Söz dizimi denetimi
+        run: find . -name "*.php" -not -path "./.git/*" -print0 | xargs -0 -n1 php -l
+      - name: Statik analiz (PHPStan seviye 5)
+        run: phpstan analyse --no-progress -c phpstan.neon.dist
+      - name: Duman testi
+        run: php testler/duman.php
+      - name: Kapsamlı uçtan uca + güvenlik testleri (SQLite)
+        run: php testler/kapsamli.php
+      - name: Site ve panel taraması
+        run: php testler/tarama.php
+  mysql:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: kok
+          MYSQL_DATABASE: bztest
+        ports: ['3306:3306']
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=3s --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: pdo_sqlite, pdo_mysql, mbstring, gd, zip, dom, fileinfo, curl
+      - name: Kapsamlı testler (MySQL)
+        run: BZ_TEST_MYSQL="127.0.0.1;3306;bztest;root;kok" php testler/kapsamli.php
+  js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --check yonetim/assets/yonetim.js

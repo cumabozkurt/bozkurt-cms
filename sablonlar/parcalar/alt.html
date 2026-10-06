@@ -1,0 +1,41 @@
+</main>
+<footer class="alt">
+    <div class="kap alt-ic">
+        <div>
+            <strong>{{ site.ad }}</strong>
+            <p><bz:genel ad="alt_metin" tur="uzunmetin" etiket="Alt bilgi metni" grup="Alt Bilgi">Türkiye'de üretildi, açık kaynakla güçlendirildi.</bz:genel></p>
+        </div>
+        <div>
+            <strong>{{ "İletişim" | cevir }}</strong>
+            <p>
+                <bz:eger kosul="genel.telefon"><a href="{{ genel.telefon | tel_link }}"><bz:genel ad="telefon" tur="telefon" etiket="Telefon" grup="İletişim" /></a><br></bz:eger>
+                <bz:eger kosul="genel.eposta"><a href="mailto:{{ genel.eposta }}"><bz:genel ad="eposta" tur="eposta" etiket="E-posta" grup="İletişim" /></a><br></bz:eger>
+                <bz:genel ad="adres" tur="uzunmetin" etiket="Adres" grup="İletişim" />
+            </p>
+        </div>
+        <div>
+            <strong>{{ "Takip edin" | cevir }}</strong>
+            <p class="sosyal">
+                <bz:eger kosul="genel.instagram"><a href="{{ genel.instagram }}" rel="noopener" target="_blank">Instagram</a></bz:eger>
+                <bz:eger kosul="genel.x"><a href="{{ genel.x }}" rel="noopener" target="_blank">X</a></bz:eger>
+                <bz:eger kosul="genel.linkedin"><a href="{{ genel.linkedin }}" rel="noopener" target="_blank">LinkedIn</a></bz:eger>
+                <bz:eger kosul="genel.whatsapp"><a href="{{ genel.whatsapp | whatsapp }}" rel="noopener" target="_blank">WhatsApp</a></bz:eger>
+                <bz:genel ad="instagram" tur="url" etiket="Instagram adresi" grup="Sosyal Medya" goster="hayir" />
+                <bz:genel ad="x" tur="url" etiket="X (Twitter) adresi" grup="Sosyal Medya" goster="hayir" />
+                <bz:genel ad="linkedin" tur="url" etiket="LinkedIn adresi" grup="Sosyal Medya" goster="hayir" />
+                <bz:genel ad="whatsapp" tur="telefon" etiket="WhatsApp numarası" grup="Sosyal Medya" goster="hayir" />
+            </p>
+        </div>
+    </div>
+    <div class="kap alt-son">
+        <span>© {{ yil }} {{ site.ad }}</span>
+        <span><a href="{{ site.onek }}kvkk">{{ "KVKK Aydınlatma Metni" | cevir }}</a> · <a href="{{ site.kok }}rss.xml">RSS</a> · <a href="{{ site.kok }}llms.txt">llms.txt</a></span>
+    </div>
+</footer>
+<bz:eger kosul="genel.whatsapp">
+<a class="wp-sabit" href="{{ genel.whatsapp | whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın">💬</a>
+</bz:eger>
+<bz:kvkk-bandi />
+<bz:analitik />
+</body>
+</html>

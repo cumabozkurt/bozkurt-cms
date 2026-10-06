@@ -1,0 +1,26 @@
+<bz:sablon baslik="Hakkımızda" sira="2" />
+<bz:dahil dosya="parcalar/ust" />
+
+<section class="kap dar bolum">
+    <bz:ekmek-kirintisi />
+    <h1><bz:alan ad="baslik" etiket="Sayfa başlığı">Hakkımızda</bz:alan></h1>
+    <bz:eger kosul="gorsel"><img class="yazi-kapak" src="{{ gorsel | resim:"1200x500" }}" alt="{{ baslik }}"></bz:eger>
+    <bz:alan ad="gorsel" tur="resim" etiket="Üst görsel" goster="hayir" />
+    <div class="metin"><bz:alan ad="icerik" tur="zengin" etiket="Metin"><p>Biz, işini tutkuyla yapan küçük ama kararlı bir ekibiz. Bu metni yönetim panelinden dakikalar içinde değiştirebilirsiniz.</p></bz:alan></div>
+</section>
+
+<section class="kap bolum">
+    <h2 class="bolum-baslik">Ekibimiz</h2>
+    <div class="kartlar">
+        <bz:tekrar ad="ekip" etiket="Ekip üyeleri">
+            <article class="kart ekip">
+                <bz:eger kosul="satir.foto"><img src="{{ satir.foto | resim:"240x240" }}" alt="{{ satir.ad_soyad }}" width="120" height="120"></bz:eger>
+                <bz:alan ad="foto" tur="resim" etiket="Fotoğraf" goster="hayir" />
+                <h3><bz:alan ad="ad_soyad" etiket="Ad Soyad" /></h3>
+                <p><bz:alan ad="unvan" etiket="Unvan" /></p>
+            </article>
+        </bz:tekrar>
+    </div>
+</section>
+
+<bz:dahil dosya="parcalar/alt" />

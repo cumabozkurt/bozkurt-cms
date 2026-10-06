@@ -1,0 +1,18 @@
+{
+    "name": "bozkurt/bozkurt-cms",
+    "description": "Tasarımcılar için Türkçe, hızlı ve güvenli açık kaynak CMS. Composer gerektirmez; bu dosya yalnızca paket bilgisidir.",
+    "type": "project",
+    "license": "MIT",
+    "homepage": "https://github.com/cumabozkurt/bozkurt-cms",
+    "support": {"issues": "https://github.com/cumabozkurt/bozkurt-cms/issues", "docs": "https://github.com/cumabozkurt/bozkurt-cms/tree/main/docs"},
+    "authors": [{"name": "Cuma Bozkurt", "email": "info@cumabozkurt.tr"}],
+    "keywords": ["cms", "php", "turkce", "kvkk", "shared-hosting", "couchcms-alternative", "multilingual", "mcp", "llms-txt", "headless"],
+    "require": {
+        "php": ">=8.1",
+        "ext-pdo": "*",
+        "ext-mbstring": "*",
+        "ext-fileinfo": "*",
+        "ext-dom": "*"
+    },
+    "suggest": {"ext-gd": "WebP küçük resimler", "ext-zip": "Tam yedekleme", "ext-pdo_sqlite": "Sıfır ayarlı veritabanı"}
+}

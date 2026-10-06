@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ site.dil }}" dir="{{ site.yon }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <bz:seo />
+    <link rel="stylesheet" href="{{ site.kok }}tema/stil.css">
+    <meta name="theme-color" content="#b91c1c">
+</head>
+<body>
+<a class="atla" href="#icerik">{{ "İçeriğe geç" | cevir }}</a>
+<header class="ust">
+    <div class="kap ust-ic">
+        <a class="logo" href="{{ site.ana }}">
+            <bz:eger kosul="site.logo"><img src="{{ site.logo }}" alt="{{ site.ad }}" height="36"><bz:degilse/><span class="logo-isaret">🐺</span> {{ site.ad }}</bz:eger>
+        </a>
+        <input type="checkbox" id="menu-ac" hidden>
+        <label for="menu-ac" class="menu-dugme" aria-label="Menüyü aç">☰</label>
+        <nav class="ana-menu" aria-label="Ana menü">
+            <bz:menu sinif="menu" />
+            <bz:arama-formu sinif="ust-arama" />
+            <bz:dil-secici sinif="diller" />
+        </nav>
+    </div>
+</header>
+<main id="icerik">

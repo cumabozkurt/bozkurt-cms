@@ -1,0 +1,71 @@
+<bz:sablon baslik="Blog" coklu="evet" sira="3" ikon="kalem" schema="BlogPosting" />
+<bz:dahil dosya="parcalar/ust" />
+
+<bz:alan ad="kapak" tur="resim" etiket="Kapak görseli" goster="hayir" />
+<bz:alan ad="kategori" tur="secim" etiket="Kategori" secenekler="Duyuru, Rehber, Haber, Etkinlik" goster="hayir" />
+<bz:alan ad="yazar" etiket="Yazar adı" genislik="yarim" goster="hayir" />
+<bz:alan ad="icerik" tur="zengin" etiket="İçerik" zorunlu="evet" goster="hayir" />
+<bz:alan ad="video" tur="video" etiket="Video bağlantısı (isteğe bağlı)" yardim="YouTube veya Vimeo bağlantısı yapıştırın" goster="hayir" />
+<bz:alan ad="etiketler" tur="coklusecim" etiket="Etiketler" secenekler="CMS, KVKK, SEO, Tasarım, Yapay Zekâ" goster="hayir" />
+
+<bz:eger kosul="gorunum == 'tekil'">
+    <article class="kap dar yazi">
+        <bz:ekmek-kirintisi />
+        <span class="ust-bilgi">{{ kategori }} · {{ tarih | tarih:"d F Y, l" }} · {{ okuma_suresi }} dk okuma</span>
+        <h1>{{ baslik }}</h1>
+        <bz:eger kosul="yazar"><p class="yazar">✍️ {{ yazar }}</p></bz:eger>
+        <bz:eger kosul="kapak"><bz:resim alan="kapak" boyutlar="640,960,1200" sinif="yazi-kapak" yukleme="eager" /></bz:eger>
+        <bz:icindekiler alan="icerik" />
+        <div class="metin">{{{ icerik }}}</div>
+        <bz:alan ad="video" />
+        <div class="paylas">
+            Paylaş:
+            <a href="https://wa.me/?text={{ baslik | url_kodla }}%20{{ tam_url | url_kodla }}" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://x.com/intent/post?text={{ baslik | url_kodla }}&url={{ tam_url | url_kodla }}" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ tam_url | url_kodla }}" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </article>
+    <section class="kap bolum">
+        <h2 class="bolum-baslik">Benzer yazılar</h2>
+        <div class="yazilar">
+            <bz:liste sablon="blog" limit="3" ilgili="kategori">
+                <article class="yazi-kart"><div class="yazi-kart-ic">
+                    <span class="ust-bilgi">{{ oge.tarih | tarih:"d M Y" }}</span>
+                    <h3><a href="{{ oge.url }}">{{ oge.baslik }}</a></h3>
+                </div></article>
+            <bz:yoksa/>
+                <p class="bos">Bu kategoride başka yazı yok.</p>
+            </bz:liste>
+        </div>
+    </section>
+<bz:degilse/>
+    <section class="kap bolum">
+        <bz:ekmek-kirintisi />
+        <h1>Blog</h1>
+        <div class="blog-duzen">
+        <aside class="blog-yan">
+            <h3>{{ "Kategoriler" | cevir }}</h3>
+            <bz:kategoriler sablon="blog" alan="kategori" />
+            <h3>{{ "Arşiv" | cevir }}</h3>
+            <bz:arsiv sablon="blog" />
+        </aside>
+        <div class="yazilar">
+            <bz:liste sablon="blog" limit="9" sayfalama="evet" url_filtre="kategori" arsiv="evet">
+                <article class="yazi-kart">
+                    <bz:eger kosul="oge.kapak"><a href="{{ oge.url }}"><img src="{{ oge.kapak | resim:"600x380" }}" alt="{{ oge.baslik }}" loading="lazy" width="600" height="380"></a></bz:eger>
+                    <div class="yazi-kart-ic">
+                        <span class="ust-bilgi">{{ oge.kategori }} · {{ oge.tarih | once }}</span>
+                        <h2><a href="{{ oge.url }}">{{ oge.baslik }}</a></h2>
+                        <p>{{ oge.ozet | kisalt:140 }}</p>
+                    </div>
+                </article>
+            <bz:yoksa/>
+                <p class="bos">{{ "Henüz yazı yok." | cevir }}</p>
+            </bz:liste>
+        </div>
+        </div>
+        <bz:sayfalama />
+    </section>
+</bz:eger>
+
+<bz:dahil dosya="parcalar/alt" />

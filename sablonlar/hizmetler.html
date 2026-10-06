@@ -1,0 +1,54 @@
+<bz:sablon baslik="Hizmetler" coklu="evet" sira="4" ikon="yigin" tekil_adi="Hizmet" schema="Service" />
+<bz:dahil dosya="parcalar/ust" />
+
+<bz:alan ad="gorsel" tur="resim" etiket="Kapak görseli" goster="hayir" />
+<bz:alan ad="ozet_metin" tur="uzunmetin" etiket="Kısa açıklama" en_fazla="200" goster="hayir" />
+<bz:alan ad="fiyat" tur="fiyat" etiket="Başlangıç fiyatı (₺)" yardim="Boş bırakırsanız fiyat gösterilmez. Ödeme açıksa sayfada satın alma formu çıkar." goster="hayir" />
+
+<bz:eger kosul="gorunum == 'tekil'">
+    <article class="kap dar yazi">
+        <bz:ekmek-kirintisi />
+        <h1>{{ baslik }}</h1>
+        <p class="giris">{{ ozet_metin }}</p>
+        <bz:eger kosul="fiyat"><p class="fiyat">{{ "Başlangıç" | cevir }}: <strong>{{ fiyat | tl }}</strong></p></bz:eger>
+        <bz:eger kosul="gorsel"><bz:resim alan="gorsel" boyutlar="640,960,1200" sinif="yazi-kapak" /></bz:eger>
+
+        <bz:bloklar ad="govde" etiket="Sayfa blokları">
+            <bz:blok ad="metin" etiket="Metin">
+                <div class="metin"><bz:alan ad="icerik" tur="zengin" etiket="Metin" /></div>
+            </bz:blok>
+            <bz:blok ad="alinti" etiket="Alıntı">
+                <blockquote class="buyuk-alinti"><p><bz:alan ad="soz" tur="uzunmetin" etiket="Alıntı" /></p><cite><bz:alan ad="kisi" etiket="Kişi" /></cite></blockquote>
+            </bz:blok>
+            <bz:blok ad="gorsel" etiket="Görsel">
+                <figure class="blok-gorsel"><img src="{{ satir.resim | resim:"1200x0" }}" alt="{{ satir.aciklama }}" loading="lazy"><figcaption><bz:alan ad="aciklama" etiket="Açıklama" /></figcaption><bz:alan ad="resim" tur="resim" etiket="Görsel" goster="hayir" /></figure>
+            </bz:blok>
+            <bz:blok ad="cagri" etiket="Eylem çağrısı">
+                <div class="cagri"><h3><bz:alan ad="baslik" etiket="Başlık" /></h3><a class="dugme" href="{{ satir.link }}"><bz:alan ad="buton" etiket="Buton metni" /></a><bz:alan ad="link" tur="url" etiket="Bağlantı" goster="hayir" /></div>
+            </bz:blok>
+        </bz:bloklar>
+
+        <bz:odeme alan="fiyat" />
+    </article>
+<bz:degilse/>
+    <section class="kap bolum">
+        <bz:ekmek-kirintisi />
+        <h1>{{ "Hizmetler" | cevir }}</h1>
+        <div class="yazilar">
+            <bz:liste limit="12" sirala="sira" yon="artan">
+                <article class="yazi-kart">
+                    <bz:eger kosul="oge.gorsel"><a href="{{ oge.url }}"><img src="{{ oge.gorsel | resim:"600x380" }}" alt="{{ oge.baslik }}" loading="lazy" width="600" height="380"></a></bz:eger>
+                    <div class="yazi-kart-ic">
+                        <h2><a href="{{ oge.url }}">{{ oge.baslik }}</a></h2>
+                        <p>{{ oge.ozet_metin }}</p>
+                        <bz:eger kosul="oge.fiyat"><p class="fiyat">{{ oge.fiyat | tl }}</p></bz:eger>
+                    </div>
+                </article>
+            <bz:yoksa/>
+                <p class="bos">{{ "Henüz hizmet eklenmedi." | cevir }}</p>
+            </bz:liste>
+        </div>
+    </section>
+</bz:eger>
+
+<bz:dahil dosya="parcalar/alt" />

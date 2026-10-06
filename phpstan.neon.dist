@@ -1,0 +1,20 @@
+parameters:
+    level: 5
+    phpVersion: 80100
+    paths:
+        - bozkurt/src
+        - bozkurt/gorunumler
+    bootstrapFiles:
+        - testler/phpstan-bootstrap.php
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Görünümlere değişkenler Admin::view() içinde extract() ile verilir
+        - message: '#Undefined variable: \$[a-zA-Z0-9_]+#'
+          path: bozkurt/gorunumler/*
+        - '#Variable \$[a-zA-Z0-9_]+ might not be defined#'
+        # Yapılandırma dosyası kurulumda oluşur
+        - '#Path in require\(\) ".*yapilandirma\.php" is not a file#'
+        # Savunmacı ?? kullanımları (dış girdiler ve PHP sürüm farkları için bilinçli)
+        - '#on left side of \?\? always exists and is not nullable#'
+        - '#in isset\(\) always exists and is not nullable#'
+        - '#Strict comparison using === between .* and null will always evaluate to false#'

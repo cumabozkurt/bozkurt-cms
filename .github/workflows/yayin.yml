@@ -1,0 +1,37 @@
+name: Yayın
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  yayin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: pdo_sqlite, mbstring, gd, zip, dom, fileinfo, curl
+      - name: Sürüm etiketle uyumlu mu?
+        run: |
+          ETIKET="${GITHUB_REF_NAME#v}"
+          SURUM=$(php -r 'preg_match("/BZ_VERSION = .([0-9.]+)./", file_get_contents("bozkurt/boot.php"), $m); echo $m[1];')
+          test "$ETIKET" = "$SURUM" || { echo "Etiket ($ETIKET) ile BZ_VERSION ($SURUM) farklı"; exit 1; }
+      - name: Testler
+        run: |
+          php testler/duman.php
+          php testler/kapsamli.php
+          php testler/tarama.php
+      - name: Paket
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          git archive --format=zip --prefix=bozkurt-cms/ -o "bozkurt-cms-$V.zip" HEAD
+          sha256sum "bozkurt-cms-$V.zip" > "bozkurt-cms-$V.zip.sha256"
+          awk "/^## $V/{f=1;next} /^## /{f=0} f" CHANGELOG.md > notlar.md
+      - name: GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" "bozkurt-cms-$V.zip" "bozkurt-cms-$V.zip.sha256" --title "BOZKURT CMS $V" --notes-file notlar.md
