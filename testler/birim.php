@@ -203,6 +203,16 @@ k(bz_csv_cell('=HYPERLINK("x")') === "'=HYPERLINK(\"x\")" && bz_csv_cell('+1') =
 k(!bz_public_url('http://127.0.0.1/') && !bz_public_url('http://10.0.0.5/x') && !bz_public_url('http://169.254.169.254/') && !bz_public_url('file:///etc/passwd') && !bz_public_url('gopher://8.8.8.8/'), 'SSRF: özel/ayrılmış adresler ve yabancı şemalar reddedilir');
 k(bz_public_url('https://8.8.8.8/'), 'SSRF: genel IP kabul edilir');
 k(Redirects::normalize('/Eski-Sayfa/?a=1') === 'eski-sayfa' && Redirects::normalize('https://eski.com/2020/01/yazi/') === '2020/01/yazi', 'Yönlendirme kaynağı normalleştirilir');
+// Kurulumda kaydedilen site adresi standart dışı portu korumalı (Debian nginx: HTTP_HOST $host → port yok)
+k(App::originFrom(['HTTP_HOST' => '127.0.0.1', 'SERVER_PORT' => '8073']) === 'http://127.0.0.1:8073', 'Köken: Host başlığında olmayan standart dışı port SERVER_PORT\'tan eklenir');
+k(App::originFrom(['HTTP_HOST' => 'ornek.com:8080', 'SERVER_PORT' => '80']) === 'http://ornek.com:8080', 'Köken: Host başlığındaki port korunur');
+k(App::originFrom(['HTTP_HOST' => 'ornek.com', 'SERVER_PORT' => '80']) === 'http://ornek.com'
+    && App::originFrom(['HTTP_HOST' => 'ornek.com', 'SERVER_PORT' => '443', 'HTTPS' => 'on']) === 'https://ornek.com', 'Köken: standart portlar eklenmez');
+k(App::originFrom(['HTTP_HOST' => 'ornek.com', 'SERVER_PORT' => '8443', 'HTTPS' => 'on']) === 'https://ornek.com:8443', 'Köken: HTTPS\'te standart dışı port eklenir');
+k(App::originFrom(['HTTP_HOST' => 'ornek.com', 'SERVER_PORT' => '8080', 'HTTP_X_FORWARDED_FOR' => '1.2.3.4']) === 'http://ornek.com', 'Köken: ters vekil arkasında iç port eklenmez');
+k(App::originFrom(['HTTP_HOST' => '[::1]', 'SERVER_PORT' => '8080']) === 'http://[::1]:8080'
+    && App::originFrom(['HTTP_HOST' => '[::1]:9000', 'SERVER_PORT' => '8080']) === 'http://[::1]:9000', 'Köken: IPv6 adreslerinde port doğru işlenir');
+k(!preg_match('/["<>]/', App::originFrom(['HTTP_HOST' => 'kötü"<host>', 'SERVER_PORT' => '80'])), 'Köken: Host başlığındaki zararlı karakterler atılır');
 App::$config['anahtar'] = 'birim-test';
 $old = (string) (time() - 10);
 $tok = $old . '.' . substr(hash_hmac('sha256', $old, 'birim-test'), 0, 20);

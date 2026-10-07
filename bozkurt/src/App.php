@@ -152,9 +152,27 @@ final class App
 
     public static function requestOrigin(): string
     {
-        $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-            || (self::trustProxy() && ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
-        $host = preg_replace('/[^a-z0-9.\-:\[\]]/i', '', (string) ($_SERVER['HTTP_HOST'] ?? 'localhost')) ?: 'localhost';
+        return self::originFrom($_SERVER, self::trustProxy());
+    }
+
+    /**
+     * İstekten köken (şema://sunucu[:port]) üretir.
+     * Bazı sunucular (ör. Debian'ın güncel nginx paketindeki fastcgi_params: HTTP_HOST $host) Host
+     * başlığındaki portu PHP'ye iletmez; bu durumda standart dışı port SERVER_PORT'tan eklenir.
+     * Ters vekil izi (X-Forwarded-*) varsa SERVER_PORT iç port olabileceği için eklenmez.
+     */
+    public static function originFrom(array $server, bool $trustProxy = false): string
+    {
+        $https = (!empty($server['HTTPS']) && $server['HTTPS'] !== 'off')
+            || ($trustProxy && ($server['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+        $host = preg_replace('/[^a-z0-9.\-:\[\]]/i', '', (string) ($server['HTTP_HOST'] ?? 'localhost')) ?: 'localhost';
+        $hasPort = (bool) preg_match('/(?:^[^:\[\]]+|\])(?::\d+)$/', $host);
+        $port = (string) ($server['SERVER_PORT'] ?? '');
+        $proxied = isset($server['HTTP_X_FORWARDED_FOR']) || isset($server['HTTP_X_FORWARDED_HOST'])
+            || isset($server['HTTP_X_FORWARDED_PROTO']) || isset($server['HTTP_X_FORWARDED_PORT']) || isset($server['HTTP_FORWARDED']);
+        if (!$hasPort && !$proxied && ctype_digit($port) && !in_array((int) $port, [0, $https ? 443 : 80], true)) {
+            $host .= ':' . (int) $port;
+        }
         return ($https ? 'https' : 'http') . '://' . $host;
     }
 

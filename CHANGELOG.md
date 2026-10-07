@@ -15,6 +15,7 @@ This project follows [Semantic Versioning](https://semver.org/); the format is i
 - Yazarlar ön yüzde satır içi düzenlemeyle yayın onayını atlayabiliyordu; artık paneldeki kural uygulanıyor (`Admin`).
 - 2FA etkinleştirildikten hemen sonra 30–60 saniye giriş yapılamıyordu (tekrar oynatma sayacı yanlış adımla kaydediliyordu) (`Admin`).
 - `<bz:degilse/>` veya `<bz:yoksa-eger>` `<bz:eger>` dışında kullanılınca derlenen PHP bozuluyor ve sayfa 500 veriyordu; derleyici artık güvenli, denetleyici bu durumu bildiriyor (`Template`).
+- Kurulumda kaydedilen site adresi, Host başlığında portu iletmeyen sunucularda (ör. Debian'ın güncel nginx paketi) standart dışı portu kaybediyordu; port artık `SERVER_PORT`'tan tamamlanıyor, ters vekil arkasında iç port eklenmiyor (`App::originFrom`).
 - Alt klasörlerdeki aynı adlı şablonların derlenmiş önbellek dosyaları çakışıyordu (`Template`).
 - IIS (`web.config`) ve Nginx örneğinde yüklenen betik/HTML/SVG dosyaları, veritabanı/günlük dosyaları ve kök geliştirme dosyaları için engeller eklendi.
 
@@ -30,7 +31,7 @@ This project follows [Semantic Versioning](https://semver.org/); the format is i
 **English summary:** fixes broken KVKK consent markup, a JSON-LD `</script>` break-out (stored XSS), a
 sanitizer bypass via control-character `javascript:` URLs, DOM XSS in the panel's paste/SEO preview, possible
 plain-text SMTP credentials after a failed STARTTLS, a webhook DNS-rebinding window, authors bypassing
-publish review via inline editing, a 2FA enrolment lock-out, invalid compiled PHP for misplaced
+publish review via inline editing, a 2FA enrolment lock-out, the install-time site URL losing a non-standard port, invalid compiled PHP for misplaced
 `<bz:degilse/>`, compiled-template cache collisions, and missing IIS/Nginx upload protections. Adds a unit test
 suite and English documentation.
 

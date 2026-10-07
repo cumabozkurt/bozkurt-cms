@@ -33,6 +33,11 @@ present so API keys reach PHP. Then edit `veri/yapilandirma.php` and set:
 
 (The installer cannot detect Nginx rewrites, so it falls back to `index.php?yol=…` URLs until you change this.)
 
+Debian's current nginx package passes `HTTP_HOST` without the port (`fastcgi_param HTTP_HOST $host`).
+BOZKURT then completes a non-standard port from `SERVER_PORT` when it records the site URL at installation
+(unless proxy headers such as `X-Forwarded-For` are present). You can always correct the canonical address
+under Settings › Genel › *Sitenin kanonik adresi*.
+
 ## IIS (Windows / Plesk)
 
 [`web.config`](../../web.config) requires the IIS URL Rewrite module. It sets `index.php` as the default
