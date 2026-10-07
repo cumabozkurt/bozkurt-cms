@@ -8,11 +8,13 @@ jobs:
   yayin:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           extensions: pdo_sqlite, mbstring, gd, zip, dom, fileinfo, curl
+          coverage: none
+          ini-values: opcache.jit=disable
       - name: Sürüm etiketle uyumlu mu?
         run: |
           ETIKET="${GITHUB_REF_NAME#v}"
