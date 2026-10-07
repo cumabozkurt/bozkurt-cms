@@ -51,10 +51,10 @@ Only if you allow it: `llms.txt` and `.md` page versions are public read-only ou
 be disabled); the MCP server must be enabled explicitly and requires an API key. MCP write tools only
 create drafts.
 
-### Is there a release ZIP / does the one-click updater work?
-No GitHub release has been published yet, so download the source with **Code › Download ZIP** or `git clone`.
-The updater needs a published release with a `.sha256` file; releases are built automatically when a
-maintainer pushes a `v*` tag.
+### Where do I download a release? How does the one-click updater work?
+Download `bozkurt-cms-x.y.z.zip` from the [latest release](https://github.com/cumabozkurt/bozkurt-cms/releases/latest). The updater (Araçlar › Güncelleme) checks the
+same GitHub releases, verifies the `.sha256` checksum and installs newer versions; releases are built
+automatically when a maintainer pushes a `v*` tag.
 
 ### Is BOZKURT based on CouchCMS code?
 No. It reuses the *idea* of making HTML templates editable with tags, but contains no CouchCMS code and is

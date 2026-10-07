@@ -23,14 +23,14 @@ No Composer, npm or build step is needed.
 
 ## 2. Get the code
 
-No GitHub release has been published yet. Until one exists, download the current `main` branch with
-**Code › Download ZIP** on GitHub, or clone it:
+Download `bozkurt-cms-x.y.z.zip` from the [latest release](https://github.com/cumabozkurt/bozkurt-cms/releases/latest). To run the development version instead,
+use **Code › Download ZIP** on GitHub or clone the repository:
 
 ```bash
 git clone https://github.com/cumabozkurt/bozkurt-cms.git
 ```
 
-When releases are published, each one ships a `bozkurt-cms-x.y.z.zip` plus a `.sha256` checksum (built by
+Each release ships a `bozkurt-cms-x.y.z.zip` plus a `.sha256` checksum (built by
 `.github/workflows/yayin.yml`). The release ZIP leaves out tests, CI files and screenshots (see `.gitattributes`).
 
 ## 3. Install on shared hosting

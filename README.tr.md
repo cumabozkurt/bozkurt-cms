@@ -6,6 +6,7 @@
 
 <p align="center">
 <a href="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml"><img src="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml/badge.svg" alt="Denetim"></a>
+<a href="https://github.com/cumabozkurt/bozkurt-cms/releases/latest"><img src="https://img.shields.io/github/v/release/cumabozkurt/bozkurt-cms?label=s%C3%BCr%C3%BCm" alt="Sürüm"></a>
 <img src="https://img.shields.io/badge/PHP-8.1%2B-777bb4" alt="PHP 8.1+">
 <a href="LICENSE"><img src="https://img.shields.io/badge/lisans-MIT-green" alt="MIT"></a>
 </p>
@@ -82,7 +83,7 @@ CouchCMS'in “HTML'e etiket ekle, CMS olsun” fikri harikaydı; ama 2010'ları
 
 ## Hızlı kurulum (Hostinger ve diğer paylaşımlı hostingler)
 
-1. [Son sürümü indirin](../../releases) ve ZIP'i bilgisayarınızda açın. Henüz yayımlanmış bir sürüm yoksa depo sayfasındaki **Code › Download ZIP** ile güncel `main` dalını indirin.
+1. [Son sürümü indirin](https://github.com/cumabozkurt/bozkurt-cms/releases/latest) (`bozkurt-cms-x.y.z.zip`; yanında `.sha256` doğrulama dosyası bulunur) ve ZIP'i bilgisayarınızda açın.
 2. hPanel › **Dosya Yöneticisi** (veya FTP) ile tüm dosyaları `public_html/` içine yükleyin.
 3. hPanel › **Gelişmiş › PHP Yapılandırması**'ndan PHP **8.1 veya üzeri** seçin (8.3 önerilir).
 4. Tarayıcıda `https://alanadiniz.com/yonetim/` adresini açın, formu doldurun. Bitti.

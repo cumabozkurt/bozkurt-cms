@@ -6,6 +6,7 @@
 
 <p align="center">
 <a href="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml"><img src="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml/badge.svg" alt="CI (Denetim)"></a>
+<a href="https://github.com/cumabozkurt/bozkurt-cms/releases/latest"><img src="https://img.shields.io/github/v/release/cumabozkurt/bozkurt-cms" alt="Latest release"></a>
 <img src="https://img.shields.io/badge/PHP-8.1%2B-777bb4" alt="PHP 8.1+">
 <img src="https://img.shields.io/badge/dependencies-none-brightgreen" alt="No Composer dependencies">
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT"></a>
@@ -93,8 +94,8 @@ CouchCMS code.
 
 ### Shared hosting (Hostinger, cPanel, Plesk …)
 
-1. Download the code. No GitHub release has been published yet, so use **Code › Download ZIP**
-   (or `git clone`). Once releases exist, download the latest `bozkurt-cms-x.y.z.zip`.
+1. Download `bozkurt-cms-x.y.z.zip` from the [latest release](https://github.com/cumabozkurt/bozkurt-cms/releases/latest) and unzip it
+   (a `.sha256` checksum file is published next to it).
 2. Upload all files to your web root (e.g. `public_html/`).
 3. Select PHP 8.1 or newer in your hosting panel (8.3 recommended).
 4. Open `https://your-domain.com/yonetim/` and complete the one-page installer.

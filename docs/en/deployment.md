@@ -92,8 +92,8 @@ For file-level backups copy `veri/` (config + SQLite database), `yuklemeler/`, `
    `tema/`, `.htaccess` or `web.config`.
 5. Clears caches and OPcache; database migrations run automatically on the next request.
 
-> No GitHub release has been published yet, so the updater currently reports that no release information
-> is available. Releases are produced by `.github/workflows/yayin.yml` when a `v*` tag is pushed.
+> Releases are produced by `.github/workflows/yayin.yml` when a maintainer pushes a `v*` tag; the updater
+> only offers versions newer than the installed `BZ_VERSION`.
 
 **Manual update**: upload the new files over the old ones, keeping `veri/`, `yuklemeler/`, `sablonlar/` and
 `tema/` (and your edited `.htaccess`/`web.config`).
