@@ -1,18 +1,24 @@
-name: Özellik önerisi
-description: Yeni bir fikir veya iyileştirme önerin
-labels: ["öneri"]
+name: Özellik önerisi / Feature request
+description: Yeni bir fikir veya iyileştirme önerin / Suggest an idea or improvement
+labels: ["enhancement"]
 body:
   - type: textarea
     id: sorun
     attributes:
-      label: "Hangi sorunu çözüyor?"
+      label: "Hangi sorunu çözüyor? / What problem does it solve?"
     validations:
       required: true
   - type: textarea
     id: oneri
     attributes:
-      label: "Önerdiğiniz çözüm"
+      label: "Önerdiğiniz çözüm / Proposed solution"
   - type: textarea
     id: alternatif
     attributes:
-      label: "Düşündüğünüz alternatifler"
+      label: "Düşündüğünüz alternatifler / Alternatives considered"
+  - type: checkboxes
+    id: ilkeler
+    attributes:
+      label: "İlkeler / Principles"
+      options:
+        - label: "Paylaşımlı hostingde, Composer/npm olmadan çalışabilir / Works on shared hosting without Composer/npm"

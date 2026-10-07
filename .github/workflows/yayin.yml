@@ -20,6 +20,7 @@ jobs:
           test "$ETIKET" = "$SURUM" || { echo "Etiket ($ETIKET) ile BZ_VERSION ($SURUM) farklı"; exit 1; }
       - name: Testler
         run: |
+          php testler/birim.php
           php testler/duman.php
           php testler/kapsamli.php
           php testler/tarama.php

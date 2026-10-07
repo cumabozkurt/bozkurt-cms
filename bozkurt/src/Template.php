@@ -200,9 +200,10 @@ final class Template
             @mkdir($dir, 0755, true);
         }
         // Dosya adı şablon kümesinin imzasını içerir: FTP ile eski tarihli dosya yüklense bile yeniden derlenir
-        $target = $dir . '/' . str_replace('/', '__', basename($name, '.html')) . '_' . substr(md5($name . self::signature()), 0, 16) . '.php';
+        $stem = str_replace('/', '__', preg_replace('/\.html$/i', '', $name) ?? $name);
+        $target = $dir . '/' . $stem . '_' . substr(md5($name . self::signature()), 0, 16) . '.php';
         if (!is_file($target)) {
-            foreach (glob($dir . '/' . str_replace('/', '__', basename($name, '.html')) . '_*.php') ?: [] as $old) {
+            foreach (glob($dir . '/' . $stem . '_*.php') ?: [] as $old) {
                 @unlink($old);
             }
             $php = (new self())->compile(self::source($name));
@@ -328,10 +329,16 @@ final class Template
                     $out .= '<?php if ($R->kosul(' . var_export($a['kosul'] ?? '', true) . ')) { ?>';
                     break;
                 case 'yoksa-eger':
-                    $out .= '<?php } elseif ($R->kosul(' . var_export($a['kosul'] ?? '', true) . ')) { ?>';
-                    break;
                 case 'degilse':
-                    $out .= '<?php } else { ?>';
+                    // Yalnızca doğrudan <bz:eger> içinde geçerlidir; aksi hâlde derlenmiş PHP bozulurdu
+                    $top = end($this->stack);
+                    if (!$top || $top['tag'] !== 'eger') {
+                        $out .= '<!-- bz: <bz:' . $tag . '> yalnızca <bz:eger> içinde kullanılabilir -->';
+                    } elseif ($tag === 'degilse') {
+                        $out .= '<?php } else { ?>';
+                    } else {
+                        $out .= '<?php } elseif ($R->kosul(' . var_export($a['kosul'] ?? '', true) . ')) { ?>';
+                    }
                     break;
                 case 'form':
                     $this->stack[] = ['tag' => 'form'];
@@ -447,6 +454,10 @@ final class Template
                 }
             } elseif (!$self && in_array($tag, $blockTags, true)) {
                 $stack[] = $tag;
+            } elseif (in_array($tag, ['degilse', 'yoksa-eger'], true) && end($stack) !== 'eger') {
+                $issues[] = "<bz:$tag> yalnızca <bz:eger> içinde kullanılabilir";
+            } elseif ($tag === 'yoksa' && end($stack) !== 'liste') {
+                $issues[] = '<bz:yoksa> yalnızca <bz:liste> içinde kullanılabilir';
             }
             if (!$closing && in_array($tag, ['alan', 'genel', 'tekrar', 'bloklar'], true)) {
                 $a = self::attrs($tk[2] ?? '');

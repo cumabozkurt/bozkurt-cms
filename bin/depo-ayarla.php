@@ -25,8 +25,11 @@ if ($eski === $yeni) {
     echo "Depo zaten $yeni.\n";
     exit(0);
 }
-$dosyalar = ['bozkurt/boot.php', 'testler/phpstan-bootstrap.php', 'README.md', 'composer.json', 'index.php', 'SECURITY.md', 'CONTRIBUTING.md',
-    '.github/ISSUE_TEMPLATE/config.yml', 'docs/HOSTINGER-KURULUM.md'];
+$dosyalar = ['bozkurt/boot.php', 'testler/phpstan-bootstrap.php', 'composer.json', 'index.php', '.github/ISSUE_TEMPLATE/config.yml'];
+// Kök dizindeki ve docs/ altındaki tüm Markdown belgeleri (README.md, README.tr.md, SECURITY.md, docs/en/*.md …)
+foreach (array_merge(glob("$kok/*.md") ?: [], glob("$kok/docs/*.md") ?: [], glob("$kok/docs/en/*.md") ?: []) as $md) {
+    $dosyalar[] = substr($md, strlen($kok) + 1);
+}
 $n = 0;
 foreach ($dosyalar as $d) {
     $yol = "$kok/$d";

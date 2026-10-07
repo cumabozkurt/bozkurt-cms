@@ -403,7 +403,9 @@ final class Admin
         }
         $values = json_decode((string) $row['veri'], true) ?: [];
         $values[$field] = mb_substr((string) ($_POST['deger'] ?? ''), 0, 200000);
-        [, $errors] = Content::saveEntry($row['sablon'], $values, ['baslik' => $row['baslik'], 'durum' => $row['durum'], 'slug' => $row['slug']], $row);
+        // Yayınlama yetkisi olmayan (yazar) değişikliği taslağa düşer — panel düzenleyicisiyle aynı kural
+        $durum = Auth::can('yayinla') ? $row['durum'] : 'taslak';
+        [, $errors] = Content::saveEntry($row['sablon'], $values, ['baslik' => $row['baslik'], 'durum' => $durum, 'slug' => $row['slug']], $row);
         $errors ? bz_json(['ok' => false, 'hata' => implode(' ', $errors)], 422) : bz_json(['ok' => true]);
     }
 
@@ -769,8 +771,10 @@ final class Admin
                 $_SESSION['bz_totp_yeni'] = Totp::secret();
             } elseif ($a === '2fa_onayla') {
                 $secret = $_SESSION['bz_totp_yeni'] ?? '';
-                if ($secret && Totp::verify($secret, (string) ($_POST['kod'] ?? ''))) {
-                    $db->update('bz_kullanicilar', ['totp_gizli' => $secret, 'totp_son' => intdiv(time(), 30) + 1], 'id = ?', [$u['id']]);
+                $step = $secret ? Totp::verifyStep($secret, (string) ($_POST['kod'] ?? '')) : null;
+                if ($step !== null) {
+                    // Kurulumda kullanılan kod tekrar kullanılamaz; sonraki kod hemen geçerlidir
+                    $db->update('bz_kullanicilar', ['totp_gizli' => $secret, 'totp_son' => $step], 'id = ?', [$u['id']]);
                     unset($_SESSION['bz_totp_yeni']);
                     bz_log('2fa_ac');
                     bz_flash('İki adımlı doğrulama etkinleştirildi.');

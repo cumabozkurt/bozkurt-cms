@@ -8,6 +8,7 @@
 /.github            export-ignore
 /.gitattributes     export-ignore
 /.gitignore         export-ignore
+/.editorconfig      export-ignore
 /testler            export-ignore
 /bin                export-ignore
 /phpstan.neon.dist  export-ignore

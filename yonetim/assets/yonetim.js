@@ -121,7 +121,8 @@
       var html = (e.clipboardData || window.clipboardData).getData('text/html');
       if (!html) return;
       e.preventDefault();
-      var tmp = document.createElement('div'); tmp.innerHTML = html;
+      // DOMParser ile ayrıştırılan belge etkisizdir: yapıştırılan <img onerror> vb. çalışmaz
+      var tmp = new DOMParser().parseFromString(html, 'text/html').body;
       $$('style,script,meta,link,o\\:p', tmp).forEach(function (n) { n.remove(); });
       $$('*', tmp).forEach(function (n) { n.removeAttribute('style'); n.removeAttribute('class'); n.removeAttribute('id'); });
       document.execCommand('insertHTML', false, bzTemizle(tmp.innerHTML));
@@ -351,7 +352,7 @@
       var baslikEl = $('#baslik', f), seoB = $('[data-serp-kaynak=baslik]', f).value, seoA = $('[data-serp-kaynak=aciklama]', f).value;
       var baslik = seoB || (baslikEl ? baslikEl.value : ''), kw = trLower($('[data-seo-anahtar]', f).value.trim());
       var html = $$('.editor-alan', f).map(function (x) { return x.innerHTML; }).join(' ') + ' ' + $$('textarea[name^="alan["]', f).map(function (x) { return x.value; }).join(' ');
-      var tmp = document.createElement('div'); tmp.innerHTML = html; var metin = tmp.innerText || '', kelime = metin.trim() ? metin.trim().split(/\s+/).length : 0;
+      var tmp = new DOMParser().parseFromString(html, 'text/html').body; var metin = tmp.innerText || '', kelime = metin.trim() ? metin.trim().split(/\s+/).length : 0;
       var slug = ($('[data-slug-hedef]', f) || {}).value || '';
       var k = [];
       k.push([baslik.length >= 30 && baslik.length <= 60, T('Başlık uzunluğu ') + baslik.length + T(' karakter (ideal 30–60)')]);

@@ -27,6 +27,10 @@ final class Webhook
             if (function_exists('curl_init') && !filter_var($host, FILTER_VALIDATE_IP)) {
                 // DNS yeniden bağlama saldırısına karşı: doğrulanan IP'ye sabitle
                 $ip = gethostbyname($host);
+                if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    error_log("Webhook reddedildi (çözümlenen adres özel/geçersiz): $url");
+                    continue;
+                }
                 $port = (int) (parse_url($url, PHP_URL_PORT) ?: (str_starts_with($url, 'https') ? 443 : 80));
                 $ch = curl_init($url);
                 curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_HTTPHEADER => $headers, CURLOPT_RETURNTRANSFER => true,

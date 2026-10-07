@@ -94,7 +94,9 @@ final class Sanitizer
 
     private static function safeUrl(string $url, string $tag): bool
     {
-        $url = trim(html_entity_decode($url));
+        // Tarayıcılar şema içindeki sekme/satır sonlarını ve baştaki kontrol karakterlerini yok sayar
+        // ("java\tscript:"). Denetimden önce bunlar atılır.
+        $url = preg_replace('/[\x00-\x20\x7f]+/', '', html_entity_decode($url)) ?? '';
         if ($tag === 'iframe') {
             $host = parse_url($url, PHP_URL_HOST);
             return str_starts_with($url, 'https://') && in_array($host, self::IFRAME_HOSTS, true);

@@ -1,39 +1,46 @@
-name: Hata bildirimi
-description: Bir şey beklendiği gibi çalışmıyor
-labels: ["hata"]
+name: Hata bildirimi / Bug report
+description: Bir şey beklendiği gibi çalışmıyor / Something is not working as expected
+labels: ["bug"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Güvenlik açıklarını burada bildirmeyin; SECURITY.md'deki özel bildirim yolunu kullanın.
+        Do not report security vulnerabilities here; use the private channel described in SECURITY.md.
   - type: textarea
     id: ne
     attributes:
-      label: "Ne oldu?"
-      description: "Kısaca sorunu anlatın."
+      label: "Ne oldu? / What happened?"
+      description: "Kısaca sorunu anlatın. / Describe the problem briefly."
     validations:
       required: true
   - type: textarea
     id: adimlar
     attributes:
-      label: "Nasıl tekrarlanır?"
-      placeholder: "1. Panelde …\n2. …"
+      label: "Nasıl tekrarlanır? / Steps to reproduce"
+      placeholder: "1. Panelde … / In the panel …\n2. …"
     validations:
       required: true
   - type: textarea
     id: beklenen
     attributes:
-      label: "Ne bekliyordunuz?"
+      label: "Ne bekliyordunuz? / Expected behaviour"
   - type: input
     id: surum
     attributes:
-      label: "BOZKURT sürümü"
+      label: "BOZKURT sürümü / version"
+      description: "Panel alt bilgisi veya Sistem Durumu / panel footer or System status"
       placeholder: "1.0.0"
     validations:
       required: true
   - type: input
     id: ortam
     attributes:
-      label: "Ortam"
-      placeholder: "PHP 8.2 · Hostinger Premium · SQLite"
+      label: "Ortam / Environment"
+      placeholder: "PHP 8.2 · Hostinger Premium · SQLite · LiteSpeed"
   - type: textarea
     id: gunluk
     attributes:
-      label: "veri/hatalar.log son satırları"
+      label: "veri/hatalar.log son satırları / last lines of veri/hatalar.log"
+      description: "Şifre, anahtar gibi gizli bilgileri silin. / Remove passwords, keys and other secrets."
       render: text

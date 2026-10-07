@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Güvenlik açığı bildir
+  - name: Güvenlik açığı bildir / Report a security vulnerability
     url: https://github.com/cumabozkurt/bozkurt-cms/security/advisories/new
-    about: Güvenlik açıklarını lütfen özel olarak bildirin.
-  - name: Belgeler
+    about: Güvenlik açıklarını lütfen özel olarak bildirin. / Please report security issues privately.
+  - name: Belgeler / Documentation
     url: https://github.com/cumabozkurt/bozkurt-cms/tree/main/docs
-    about: Şablon rehberi, Hostinger kurulumu, yapay zekâ ve güvenlik belgeleri.
+    about: Kurulum, şablon dili, API, MCP ve güvenlik belgeleri. / Installation, template language, API, MCP and security docs.

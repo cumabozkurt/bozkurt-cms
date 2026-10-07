@@ -515,7 +515,7 @@ final class Runtime
             $h[] = '<link rel="alternate" hreflang="x-default" href="' . e(App::siteUrl() . ($this->alternates()[App::defaultLang()] ?? App::url('', App::defaultLang()))) . '">';
         }
         if ($isHome && ($biz = self::localBusiness())) {
-            $h[] = '<script type="application/ld+json">' . json_encode($biz, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
+            $h[] = '<script type="application/ld+json">' . self::jsonLd($biz) . '</script>';
         }
 
         $ld = $isHome ? [
@@ -544,9 +544,18 @@ final class Runtime
             $ld = $qa ? ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $qa] : $ld;
         }
         if ($ld) {
-            $h[] = '<script type="application/ld+json">' . json_encode($ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
+            $h[] = '<script type="application/ld+json">' . self::jsonLd($ld) . '</script>';
         }
         return implode("\n    ", $h) . "\n";
+    }
+
+    /**
+     * <script type="application/ld+json"> içine güvenle gömülecek JSON.
+     * JSON_HEX_TAG: başlık/alan içindeki "</script>" etiketi betik bloğunu kapatamaz (XSS koruması).
+     */
+    public static function jsonLd(array $data): string
+    {
+        return (string) json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP);
     }
 
     public function tag_analitik(array $a): string
@@ -645,7 +654,7 @@ HTML;
             $ld[] = ['@type' => 'ListItem', 'position' => $i + 1, 'name' => $name, 'item' => App::siteUrl() . $url];
         }
         $h .= '</ol></nav>';
-        $h .= '<script type="application/ld+json">' . json_encode(['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $ld], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
+        $h .= '<script type="application/ld+json">' . self::jsonLd(['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $ld]) . '</script>';
         return $h;
     }
 
@@ -675,8 +684,8 @@ HTML;
     {
         $kvkk = App::setting('kvkk_sayfasi', 'kvkk');
         $link = e(App::url($kvkk));
-        $text = isset($a['metin']) ? e($a['metin']) : str_replace('{link}', $link, e($this->tr('Kişisel verilerimin {link}Aydınlatma Metni{/link} kapsamında işlenmesini kabul ediyorum.')));
-        $text = str_replace(['{link}', '{/link}'], ['<a href="' . $link . '" target="_blank">', '</a>'], $text);
+        $text = e($a['metin'] ?? $this->tr('Kişisel verilerimin {link}Aydınlatma Metni{/link} kapsamında işlenmesini kabul ediyorum.'));
+        $text = str_replace(['{link}', '{/link}'], ['<a href="' . $link . '" target="_blank" rel="noopener">', '</a>'], $text);
         return '<label class="bz-kvkk-onay"><input type="checkbox" name="kvkk_onay" value="1" required> <span>' . $text . '</span></label>';
     }
 

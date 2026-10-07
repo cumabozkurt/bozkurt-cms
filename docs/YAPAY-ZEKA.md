@@ -1,6 +1,6 @@
 # Yapay Zekâ Katmanı
 
-BOZKURT 2.0, yapay zekâyı hem **editörün yardımcısı** hem de sitenizin **yapay zekâ asistanlarında görünürlüğü** için kullanır. Hiçbiri zorunlu değildir; anahtar eklemeden de site çalışır.
+BOZKURT CMS, yapay zekâyı hem **editörün yardımcısı** hem de sitenizin **yapay zekâ asistanlarında görünürlüğü** için kullanır. Hiçbiri zorunlu değildir; anahtar eklemeden de site çalışır.
 
 ## 1. Editör yardımcısı (Ayarlar › Yapay Zekâ)
 

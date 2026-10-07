@@ -2,108 +2,119 @@
 
 <h1 align="center">BOZKURT CMS</h1>
 
+<p align="center"><strong>English</strong> · <a href="README.tr.md">Türkçe</a></p>
+
 <p align="center">
-<a href="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml"><img src="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml/badge.svg" alt="Denetim"></a>
-<a href="https://github.com/cumabozkurt/bozkurt-cms/releases/latest"><img src="https://img.shields.io/github/v/release/cumabozkurt/bozkurt-cms?label=s%C3%BCr%C3%BCm" alt="Sürüm"></a>
+<a href="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml"><img src="https://github.com/cumabozkurt/bozkurt-cms/actions/workflows/denetim.yml/badge.svg" alt="CI (Denetim)"></a>
 <img src="https://img.shields.io/badge/PHP-8.1%2B-777bb4" alt="PHP 8.1+">
-<a href="LICENSE"><img src="https://img.shields.io/badge/lisans-MIT-green" alt="MIT"></a>
+<img src="https://img.shields.io/badge/dependencies-none-brightgreen" alt="No Composer dependencies">
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT"></a>
 </p>
 
-<p align="center"><strong>Tasarımcılar için Türkçe, hızlı ve güvenli açık kaynak içerik yönetim sistemi.</strong><br>
-Herhangi bir HTML şablonuna birkaç etiket ekleyin, siteniz dakikalar içinde yönetilebilir olsun.<br>
-PHP 8.1+ · Composer gerekmez · SQLite veya MySQL · Çok dilli · Yapay zekâ hazır · Hostinger ve tüm paylaşımlı hostinglerde çalışır.</p>
+<p align="center"><strong>A fast, secure, open-source CMS for designers — built Turkish-first.</strong><br>
+Add a few tags to any HTML template and the site becomes editable in minutes.<br>
+PHP 8.1+ · no Composer · SQLite or MySQL · multilingual · AI-ready · runs on ordinary shared hosting.</p>
 
-<p align="center"><img src="docs/ekran-goruntuleri/panel.png" alt="BOZKURT CMS yönetim paneli" width="860"></p>
+<p align="center"><img src="docs/ekran-goruntuleri/panel.png" alt="BOZKURT CMS admin panel" width="860"></p>
+
+> **About the language:** BOZKURT is built for Turkish users first. The admin panel is Turkish by default
+> (an English panel language ships in `bozkurt/lang/panel-en.php`), and template tags, field types and
+> code identifiers use Turkish words (`<bz:alan>` = field, `<bz:liste>` = list, `<bz:eger>` = if).
+> This README and [`docs/en/`](docs/en/) explain everything in English.
 
 ---
 
-## Neden BOZKURT?
+## Why BOZKURT?
 
-CouchCMS'in “HTML'e etiket ekle, CMS olsun” fikri harikaydı; ama 2010'ların teknolojisiyle (mysql_* uyumluluk katmanı, jQuery, CKEditor 4, KCFinder, timthumb, phpass, Türkçe desteği yok) kaldı. BOZKURT aynı kolaylığı **sıfırdan, modern PHP ile** yeniden kurar ve Türkiye'nin ihtiyaçlarını (KVKK, Türkçe karakterler, ₺, yerel hosting) baştan hesaba katar.
+CouchCMS popularised the idea of "add tags to your HTML and it becomes a CMS". BOZKURT rebuilds that
+workflow **from scratch with modern PHP**, with no third-party runtime dependencies, and designs in
+Turkey-specific needs from day one: KVKK (Turkish GDPR) consent tools, correct Turkish casing (İ/ı),
+Turkish slugs, ₺ prices, local payment providers and shared-hosting compatibility. It contains no
+CouchCMS code.
 
-| | CouchCMS 2.x | BOZKURT CMS 1.0 |
+## Features
+
+**For designers**
+- Make plain HTML editable with tags: `<bz:alan>`, `<bz:tekrar>`, `<bz:bloklar>`, `<bz:liste>`, `<bz:eger>`, `<bz:form>`, `<bz:genel>`, `<bz:resim>`, `<bz:dil-secici>` …
+- Templates are compiled to cached PHP (OPcache-friendly); raw PHP inside templates is never executed.
+- 26 field types: rich text, Markdown, image, file, price (₺), relation, video, map, repeater, **block editor**, Turkish province, TCKN (national ID), VKN (tax number), IBAN …
+- 29 output filters (`tarih`, `tl`, `kisalt`, `resim:"800x600"`, `markdown`, `video` …).
+- Built-in template linter in the panel (unclosed tags, unknown tags/field types, invalid field names).
+
+**For editors**
+- Drafts, scheduled publishing, preview, 25-revision history, duplication, local autosave.
+- **Front-end inline editing**, content calendar with Turkish public holidays, word counter.
+- Optional **AI assistant** for any OpenAI-compatible API (OpenAI, Gemini, Groq, OpenRouter, local Ollama …): proofreading, summaries, title suggestions, SEO text, bulk translation, image alt text.
+- Live SEO analysis and score while editing.
+
+**Multilingual**
+- Language prefixes (`/en/`, `/de/`, `/ar/` …), translation workflow, `hreflang` + `x-default`, per-language global fields, template string dictionaries, RTL support.
+
+**SEO and AI visibility**
+- Automatic meta, Open Graph, canonical and JSON-LD (WebSite, Article, BreadcrumbList, FAQPage, LocalBusiness); sitemap with images and hreflang; RSS.
+- 301 redirect manager, automatic 301 when a slug changes, 404 log, canonical URL normalisation (trailing slash, letter case, `index.php`), site-wide SEO audit.
+- `llms.txt`, `llms-full.txt`, a Markdown (`.md`) version of every page, AI-crawler policy in `robots.txt`.
+
+**Integrations**
+- REST API (`/api/v1`, read/write, scoped keys, rate limiting), **MCP server** at `/mcp` for AI clients, HMAC-signed webhooks (Zapier, Make, n8n …).
+- WordPress importer, static site export, one-click updater (verifies a SHA-256 checksum).
+
+**Turkey pack**
+- KVKK: cookie consent banner, explicit-consent checkbox, IP anonymisation, data-retention period; İYS (commercial messaging) consent.
+- **PayTR and iyzico** payments, orders, e-invoice CSV export; **Netgsm** SMS notifications.
+- Yandex verification and Metrica, LocalBusiness schema, Turkish holiday calendar.
+
+**Marketing**
+- GA4, Meta Pixel and Yandex Metrica (loaded only after consent), form conversion events, UTM capture, WhatsApp button.
+
+**Security and operations**
+- `password_hash`, TOTP 2FA with replay protection, IP + account lockout, CSRF tokens, honeypot, CSP/HSTS headers, roles (admin / editor / author), activity log, password reset.
+- DOM-based allow-list HTML sanitizer for rich text; SSRF guards for webhooks and the AI endpoint.
+- White-labelling, English panel language, go-live checklist, database-independent JSON/ZIP backups (SQLite ⇄ MySQL migration).
+- 240+ automated checks in 4 test suites, PHPStan level 5, CI on PHP 8.1–8.4 and MySQL 8.
+
+## Screenshots
+
+| Website (bundled demo templates) | Content editor with SEO panel | Content calendar |
 |---|---|---|
-| PHP | 5.x mirası, `mysql_*` + mysql2i | PHP 8.1+ `strict_types`, PDO |
-| Veritabanı | Yalnızca MySQL | **SQLite (sıfır ayar)** veya MySQL/MariaDB |
-| Kurulum | `config.php` elle düzenlenir | **Tek ekranlık web sihirbazı** |
-| Şablonların tanınması | Şablonu yönetici olarak ziyaret etmek gerekir | `sablonlar/` klasörüne koymak yeterli, otomatik tarama |
-| Şablon motoru | Her istekte ayrıştırma | **PHP'ye derlenir**, OPcache dostu |
-| Önbellek | Basit | Tam sayfa önbellek + otomatik temizleme |
-| Editör | CKEditor 4 + KCFinder | Bağımlılıksız editör + medya kütüphanesi + sunucu tarafı HTML temizleyici |
-| Resim | timthumb | GD ile WebP küçük resim, EXIF/konum temizliği |
-| Güvenlik | phpass, captcha | `password_hash`, **2FA (TOTP)**, kaba kuvvet kilidi, CSRF, bal küpü |
-| Türkçe | Yok | **Varsayılan**: arayüz, slug, tarih, ₺, telefon, İ/ı |
-| KVKK | Yok | Çerez onay bandı, açık rıza kutusu, IP anonimleştirme, saklama süresi |
-| API | Yok | Okuma/yazma JSON API, MCP sunucusu, web kancaları |
-| Yedek | SQL dökümü | DB'den bağımsız JSON/ZIP (SQLite ⇄ MySQL taşıma) |
-| Çok dil | Yok | `/en/` önekleri, hreflang, çeviri iş akışı |
-| Yapay zekâ | Yok | YZ yardımcısı, llms.txt, `.md` sürümler, MCP sunucusu |
-| Ödeme | PayPal eklentisi | PayTR, iyzico |
-| Lisans | CPAL (atıf kaldırılamaz) | **MIT** |
+| <img src="docs/ekran-goruntuleri/site.png" width="280" alt="Demo site"> | <img src="docs/ekran-goruntuleri/duzenle.png" width="280" alt="Content editor"> | <img src="docs/ekran-goruntuleri/takvim.png" width="280" alt="Calendar"> |
 
-## Özellikler
+| Blog (demo) | Dark panel theme | English panel language |
+|---|---|---|
+| <img src="docs/ekran-goruntuleri/site-blog.png" width="280" alt="Blog"> | <img src="docs/ekran-goruntuleri/koyu-tema.png" width="280" alt="Dark theme"> | <img src="docs/ekran-goruntuleri/panel-ingilizce.png" width="280" alt="English panel"> |
 
-**Tasarımcı için**
-- Etiketle yönetilebilir HTML: `<bz:alan>`, `<bz:tekrar>`, `<bz:bloklar>`, `<bz:liste>`, `<bz:eger>`, `<bz:form>`, `<bz:genel>`, `<bz:resim>`, `<bz:dil-secici>`…
-- 26 alan türü: zengin metin, Markdown, resim, fiyat (₺), ilişki, video, harita, tekrarlanan grup, **blok düzenleyici**, il, TCKN, VKN, IBAN…
-- Panelde şablon denetleyici (kapatılmamış etiket, geçersiz alan adı uyarısı)
+## Quick start
 
-**Editör için**
-- Taslak, zamanlanmış yayın, önizleme, 25 sürümlük geçmiş, kopyalama, **yerel otomatik taslak**
-- **Ön yüzde satır içi düzenleme**, içerik takvimi (resmî tatiller işaretli), kelime sayacı
-- **✨ Yapay zekâ yardımcısı:** yazım düzeltme, özet, başlık önerisi, SEO metni, toplu çeviri, görselden alt metin (OpenAI, Gemini, Groq, OpenRouter, yerel Ollama…)
-- Canlı Türkçe SEO analizi ve puanı
+### Requirements
 
-**Çok dilli**
-- `/en/`, `/de/`, `/ar/`… önekleri, çeviri iş akışı, `hreflang` + `x-default`, dil başına genel alanlar, şablon metin sözlükleri, RTL
+- PHP **8.1+** with `pdo_sqlite` **or** `pdo_mysql`, `mbstring`, `fileinfo`, `dom` (recommended: `gd` for WebP thumbnails, `zip` for backups/updates, `curl`).
+- Apache / LiteSpeed (`.htaccess` included), Nginx (`nginx.conf.ornek`) or IIS (`web.config`).
+- SQLite (zero configuration) or MySQL / MariaDB.
 
-**SEO ve yapay zekâ görünürlüğü**
-- Otomatik meta/OG/canonical/JSON-LD (WebSite, Article, Breadcrumb, FAQPage, LocalBusiness), görselli ve hreflang'li sitemap
-- 301 yönlendirme yöneticisi, slug değişince otomatik 301, 404 günlüğü, kanonik adres düzeltme, site geneli SEO denetimi
-- **llms.txt, llms-full.txt, her sayfanın `.md` sürümü**, robots.txt'de YZ bot politikası
+### Shared hosting (Hostinger, cPanel, Plesk …)
 
-**Entegrasyon**
-- REST API (okuma/yazma, kapsamlı anahtarlar), **MCP sunucusu** (Claude, ChatGPT, Cursor), web kancaları (Zapier, Make, n8n)
-- WordPress içe aktarıcı, statik site dışa aktarma, tek tıkla güncelleme
+1. Download the code. No GitHub release has been published yet, so use **Code › Download ZIP**
+   (or `git clone`). Once releases exist, download the latest `bozkurt-cms-x.y.z.zip`.
+2. Upload all files to your web root (e.g. `public_html/`).
+3. Select PHP 8.1 or newer in your hosting panel (8.3 recommended).
+4. Open `https://your-domain.com/yonetim/` and complete the one-page installer.
 
-**Türkiye paketi**
-- KVKK: çerez onayı, açık rıza, IP anonimleştirme, saklama süresi · İYS onayı
-- **PayTR ve iyzico** ödeme, siparişler, e-Fatura CSV · **Netgsm SMS** bildirimi
-- Türkçe slug, İ/ı, tarih, ₺, telefon · Yandex doğrulama ve Metrica · LocalBusiness
+SQLite needs no setup. For MySQL, create a database and user first. Step-by-step Hostinger guide (Turkish):
+[docs/HOSTINGER-KURULUM.md](docs/HOSTINGER-KURULUM.md).
 
-**Pazarlama**
-- GA4, Meta Pixel, Yandex Metrica (onay sonrası), form dönüşüm olayları, **UTM yakalama**, WhatsApp düğmesi
-
-**Güvenlik ve işletme**
-- 2FA (tekrar oynatma korumalı), IP + hesap bazlı kilit, CSP/HSTS, oturum süreleri, şifre sıfırlama, roller, etkinlik günlüğü
-- Beyaz etiket, panel İngilizce dili, yayına hazırlık listesi, DB'den bağımsız yedek
-- 145 kontrollü otomatik test (SQLite ve MySQL), PHPStan seviye 5, PHP 8.1–8.4 CI
-
-## Hızlı kurulum (Hostinger ve diğer paylaşımlı hostingler)
-
-1. [Son sürümü indirin](../../releases) ve ZIP'i bilgisayarınızda açın.
-2. hPanel › **Dosya Yöneticisi** (veya FTP) ile tüm dosyaları `public_html/` içine yükleyin.
-3. hPanel › **Gelişmiş › PHP Yapılandırması**'ndan PHP **8.1 veya üzeri** seçin (8.3 önerilir).
-4. Tarayıcıda `https://alanadiniz.com/yonetim/` adresini açın, formu doldurun. Bitti.
-
-> SQLite için hiçbir ayar gerekmez. MySQL tercih ederseniz önce hPanel › **Veritabanları** › MySQL'den bir veritabanı ve kullanıcı oluşturun.
-
-Ayrıntılı rehber: [docs/HOSTINGER-KURULUM.md](docs/HOSTINGER-KURULUM.md)
-
-### Yerel geliştirme
+### Local development
 
 ```bash
 git clone https://github.com/cumabozkurt/bozkurt-cms.git && cd bozkurt-cms
 php -S localhost:8000 yonlendirici.php
-# http://localhost:8000/yonetim/
-
-php testler/kapsamli.php   # 105 uçtan uca + güvenlik testi (MySQL: BZ_TEST_MYSQL="sunucu;port;db;kullanici;sifre")
-php testler/tarama.php     # tüm site ve panel taraması (bağlantı, HTML, SEO, yedek)
+# open http://localhost:8000/yonetim/ and run the installer
 ```
 
-## 60 saniyede şablon
+More: [docs/en/getting-started.md](docs/en/getting-started.md)
 
-`sablonlar/hizmetler.html` oluşturun:
+## A template in 60 seconds
+
+Create `sablonlar/hizmetler.html` ("services"):
 
 ```html
 <bz:sablon baslik="Hizmetler" coklu="evet" sira="4" />
@@ -130,41 +141,85 @@ php testler/tarama.php     # tüm site ve panel taraması (bağlantı, HTML, SEO
 <bz:dahil dosya="parcalar/alt" />
 ```
 
-Paneli yenileyin: soldaki menüde **Hizmetler** belirir; `/hizmetler` liste, `/hizmetler/web-tasarim` detay sayfasıdır.
-Tüm etiketler ve süzgeçler: **[docs/SABLON-REHBERI.md](docs/SABLON-REHBERI.md)**
+Reload the panel: **Hizmetler** appears in the sidebar; `/hizmetler` is the list page and
+`/hizmetler/web-tasarim` a detail page. `coklu="evet"` means "multiple entries", `{{ }}` prints escaped
+output and `{{{ }}}` prints sanitized HTML. This exact example is compiled and linted by the unit tests.
 
-## Klasör yapısı
+Full reference: [docs/en/template-language.md](docs/en/template-language.md) (English) ·
+[docs/SABLON-REHBERI.md](docs/SABLON-REHBERI.md) (Turkish, complete).
+
+## Configuration
+
+The installer writes `veri/yapilandirma.php` (database driver, secret key, timezone, default language,
+pretty URLs, debug mode). Everything else — site identity, languages, SEO, AI, KVKK, SMTP, payments,
+cache, API and webhooks — is managed in **Yönetim › Ayarlar** (Admin › Settings) and stored in the database.
+See [docs/en/configuration.md](docs/en/configuration.md).
+
+## Architecture
 
 ```
-index.php            Ön yüz giriş noktası
-yonetim/             Yönetim paneli + kurulum sihirbazı (assets/ içinde CSS/JS)
-bozkurt/             Çekirdek (src/), dil dosyaları, panel görünümleri — web erişimine kapalı
-sablonlar/           Sizin HTML şablonlarınız (parcalar/ = ortak parçalar) — web erişimine kapalı
-tema/                Şablonların CSS/JS/görselleri (herkese açık)
-yuklemeler/          Yüklenen medya — PHP çalıştırma kapalı
-veri/                Yapılandırma, SQLite, önbellek, oturumlar — web erişimine kapalı
-docs/                Belgeler
+index.php            Front-end entry point → Bozkurt\Site::run()
+yonetim/             Admin panel + installer entry point (assets/ = panel CSS/JS)
+bozkurt/             Core — not web-accessible
+  boot.php           Constants, autoloader, App::boot()
+  src/               Classes (namespace Bozkurt): Site, Admin, Template, Runtime, Content, Api, Mcp …
+  gorunumler/        Admin panel views
+  lang/              Panel translations (English)
+sablonlar/           Your HTML templates (parcalar/ = partials, diller/ = string dictionaries) — not web-accessible
+tema/                Public CSS/JS/images used by templates
+yuklemeler/          Uploaded media — script execution disabled
+veri/                Config, SQLite database, caches, sessions, logs — not web-accessible
+testler/             Test suites (unit, smoke, end-to-end, crawl)
+bin/                 CLI helpers
+docs/                Documentation
 ```
 
-## Belgeler
+Request flow, database schema and the template compiler are described in
+[docs/en/architecture.md](docs/en/architecture.md).
 
-- [Şablon dili rehberi](docs/SABLON-REHBERI.md)
-- [Yapay zekâ katmanı: YZ yardımcısı, llms.txt, MCP, API](docs/YAPAY-ZEKA.md)
-- [5 uzman gözüyle inceleme](docs/INCELEME-5-UZMAN.md)
-- [Agresif güvenlik denetimi (3 bakış açısı)](docs/GUVENLIK-DENETIMI.md)
-- [Son tarama raporu (5 açı)](docs/SON-TARAMA.md)
-- [Hostinger kurulumu ve SSS](docs/HOSTINGER-KURULUM.md)
-- [CouchCMS uçtan uca analizi](docs/ANALIZ-COUCHCMS.md)
-- [25 popüler CMS reposunun karşılaştırması](docs/KARSILASTIRMA-25-REPO.md)
-- [Güvenlik modeli](docs/GUVENLIK.md)
-- [Yol haritası](docs/YOL-HARITASI.md)
-- [Katkı rehberi](CONTRIBUTING.md)
+## Documentation
 
-## Gereksinimler
+| English | Türkçe |
+|---|---|
+| [Getting started](docs/en/getting-started.md) | [Hostinger kurulumu ve SSS](docs/HOSTINGER-KURULUM.md) |
+| [Configuration](docs/en/configuration.md) | [Yapılandırma](docs/YAPILANDIRMA.md) |
+| [Architecture](docs/en/architecture.md) | [Mimari](docs/MIMARI.md) |
+| [Template language](docs/en/template-language.md) | [Şablon dili rehberi](docs/SABLON-REHBERI.md) |
+| [REST API, MCP and webhooks](docs/en/api.md) | [Yapay zekâ katmanı, MCP, API](docs/YAPAY-ZEKA.md) |
+| [Deployment](docs/en/deployment.md) | [Hostinger kurulumu](docs/HOSTINGER-KURULUM.md) |
+| [Security model](docs/en/security.md) | [Güvenlik modeli](docs/GUVENLIK.md) |
+| [Testing](docs/en/testing.md) | [Katkı rehberi](CONTRIBUTING.md) |
+| [FAQ](docs/en/faq.md) | [Yol haritası](docs/YOL-HARITASI.md) |
 
-PHP 8.1+ · `pdo_sqlite` veya `pdo_mysql` · `mbstring` · `fileinfo` · `dom` · önerilen: `gd` (WebP), `zip`.
-Apache/LiteSpeed (`.htaccess` hazır), Nginx (`nginx.conf.ornek`) veya IIS (`web.config`).
+Full index: [docs/README.md](docs/README.md)
 
-## Lisans
+## Testing
 
-[MIT](LICENSE) — ticari projelerde özgürce kullanın, beyaz etiketleyin. BOZKURT CMS, CouchCMS'ten kod içermez; fikir ilhamı için CouchCMS ekibine teşekkürler.
+```bash
+php testler/birim.php      # unit tests (sanitizer, template compiler, filters, validators, TOTP)
+php testler/duman.php      # smoke test
+php testler/kapsamli.php   # end-to-end + attacker scenarios (MySQL: BZ_TEST_MYSQL="host;port;db;user;pass")
+php testler/tarama.php     # crawls every site and panel page (links, HTML, SEO, backups)
+phpstan analyse -c phpstan.neon.dist
+```
+
+The [CI workflow](.github/workflows/denetim.yml) runs all of the above on PHP 8.1–8.4, plus the end-to-end suite
+against MySQL 8 and a syntax check of the panel JavaScript. See [docs/en/testing.md](docs/en/testing.md).
+
+## Roadmap
+
+Planned work (from [docs/YOL-HARITASI.md](docs/YOL-HARITASI.md)):
+
+- **1.1 — Quality:** split `Admin.php` into section classes, nonce-based panel CSP, revision diff view, automatic `preload` for the LCP image, image focal point for cropping.
+- **1.2 — Expansion:** multi-site, signed plugin system and hooks, cart/stock and shipping integrations, direct e-invoice integrations.
+
+## Contributing
+
+Contributions are welcome — please read [CONTRIBUTING.md](CONTRIBUTING.md) and the
+[Code of Conduct](CODE_OF_CONDUCT.md). Report security issues privately as described in [SECURITY.md](SECURITY.md).
+Changes are tracked in [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+[MIT](LICENSE) © Cuma Bozkurt and BOZKURT CMS contributors. Free for commercial use and white-labelling.
+Thanks to the CouchCMS team for the original idea.

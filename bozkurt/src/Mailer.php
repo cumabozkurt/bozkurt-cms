@@ -13,7 +13,7 @@ final class Mailer
 
     public static function send(string $to, string $subject, string $html, ?string $replyTo = null): bool
     {
-        $from = App::setting('smtp_gonderen', App::setting('smtp_kullanici', 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'localhost')));
+        $from = App::setting('smtp_gonderen', App::setting('smtp_kullanici', 'noreply@' . (parse_url(App::siteUrl(), PHP_URL_HOST) ?: 'localhost')));
         $fromName = App::setting('site_adi', 'BOZKURT CMS');
         $headers = [
             'MIME-Version: 1.0',
@@ -79,7 +79,11 @@ final class Mailer
         $cmd($ehlo, [250]);
         if ($sec === 'tls') {
             $cmd('STARTTLS', [220]);
-            stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT);
+            if (stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT) !== true) {
+                fclose($fp);
+                // Şifreleme kurulamadıysa kullanıcı adı/şifre asla düz metin gönderilmez
+                throw new \RuntimeException('STARTTLS ile şifreli bağlantı kurulamadı.');
+            }
             $cmd($ehlo, [250]);
         }
         if ($user !== '') {

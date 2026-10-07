@@ -1,0 +1,23 @@
+# https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Panel varlıkları, tema CSS'i ve panel görünümleri 2 boşluk kullanır
+[{yonetim/assets/*,tema/*.css,bozkurt/gorunumler/*.php}]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[web.config]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

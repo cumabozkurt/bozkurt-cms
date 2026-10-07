@@ -1,10 +1,44 @@
-# Değişiklik Günlüğü
+# Değişiklik Günlüğü / Changelog
+
+Bu proje [Anlamsal Sürümleme](https://semver.org/lang/tr/) kullanır. Biçim [Keep a Changelog](https://keepachangelog.com/tr-TR/1.1.0/) esinlidir.
+This project follows [Semantic Versioning](https://semver.org/); the format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## Yayımlanmamış / Unreleased
+
+**Düzeltmeler**
+- KVKK açık rıza kutusu bozuk HTML üretiyordu (bağlantı metne `…/kvkkAydınlatma Metni</a>` olarak sızıyordu); iletişim ve ödeme formları dahil tüm formlarda düzeltildi (`Runtime::tag_kvkk_onay`).
+- **Güvenlik:** JSON-LD çıktısında `</script>` kaçışı mümkündü (içerik başlığı, SSS veya işletme bilgisinden kalıcı XSS). JSON-LD artık `<`, `>`, `&` kaçışlı üretiliyor (`Runtime::jsonLd`).
+- **Güvenlik:** HTML temizleyicide kontrol karakteriyle başlayan `javascript:` bağlantıları (ör. `\x01javascript:`) canlı bağlantıya dönüşebiliyordu; şema denetiminden önce kontrol karakterleri ve boşluklar atılıyor (`Sanitizer::safeUrl`).
+- **Güvenlik:** Panelde yapıştırılan HTML ve SEO analizindeki içerik canlı belgede `innerHTML` ile ayrıştırılıyordu (`<img onerror>` çalışabiliyordu); artık betik çalıştırmayan `DOMParser` kullanılıyor (`yonetim/assets/yonetim.js`).
+- **Güvenlik:** SMTP'de STARTTLS başarısız olursa kimlik bilgileri düz metin gönderilebiliyordu; artık bağlantı kesilip hata veriliyor. Varsayılan gönderen alanı `Host` başlığı yerine site adresinden alınıyor (`Mailer`).
+- **Güvenlik:** Web kancasında DNS çözümlemesi ile bağlantı arasındaki zaman farkı (DNS rebinding) kapatıldı; sabitlenen IP de genel adres olmalı (`Webhook`).
+- Yazarlar ön yüzde satır içi düzenlemeyle yayın onayını atlayabiliyordu; artık paneldeki kural uygulanıyor (`Admin`).
+- 2FA etkinleştirildikten hemen sonra 30–60 saniye giriş yapılamıyordu (tekrar oynatma sayacı yanlış adımla kaydediliyordu) (`Admin`).
+- `<bz:degilse/>` veya `<bz:yoksa-eger>` `<bz:eger>` dışında kullanılınca derlenen PHP bozuluyor ve sayfa 500 veriyordu; derleyici artık güvenli, denetleyici bu durumu bildiriyor (`Template`).
+- Alt klasörlerdeki aynı adlı şablonların derlenmiş önbellek dosyaları çakışıyordu (`Template`).
+- IIS (`web.config`) ve Nginx örneğinde yüklenen betik/HTML/SVG dosyaları, veritabanı/günlük dosyaları ve kök geliştirme dosyaları için engeller eklendi.
+
+**Testler**
+- Yeni `testler/birim.php`: veritabanı ve sunucu gerektirmeyen birim testleri (temizleyici, derleyici/denetleyici, süzgeçler, doğrulayıcılar, TOTP RFC 6238 vektörleri, README şablon örneği).
+- `testler/kapsamli.php`: JSON-LD kaçışı, kontrol karakterli bağlantı ve KVKK bağlantısı için regresyon testleri.
+- CI ve yayın iş akışı birim testlerini de çalıştırıyor.
+
+**Belgeler**
+- İngilizce README ve `docs/en/` (başlangıç, yapılandırma, mimari, şablon dili, API/MCP/web kancaları, dağıtım, güvenlik, testler, SSS); Türkçe README `README.tr.md`'ye taşındı; `docs/MIMARI.md`, `docs/YAPILANDIRMA.md` ve belge dizini eklendi.
+- İki dilli katkı rehberi, davranış kuralları, güvenlik politikası, issue/PR şablonları; `.editorconfig`.
+
+**English summary:** fixes broken KVKK consent markup, a JSON-LD `</script>` break-out (stored XSS), a
+sanitizer bypass via control-character `javascript:` URLs, DOM XSS in the panel's paste/SEO preview, possible
+plain-text SMTP credentials after a failed STARTTLS, a webhook DNS-rebinding window, authors bypassing
+publish review via inline editing, a 2FA enrolment lock-out, invalid compiled PHP for misplaced
+`<bz:degilse/>`, compiled-template cache collisions, and missing IIS/Nginx upload protections. Adds a unit test
+suite and English documentation.
 
 ## 1.0.0 — 2026-10-07
 İlk kararlı sürüm.
 
 **Çekirdek**
-- Derlenen şablon dili (`<bz:*>` etiketleri, `{{ }}` değişkenler, 30+ süzgeç), şablon denetleyici
+- Derlenen şablon dili (`<bz:*>` etiketleri, `{{ }}` değişkenler, 29 süzgeç), şablon denetleyici
 - 26 alan türü: tekrarlanan gruplar, blok düzenleyici, ilişki, Markdown, il, TCKN, VKN, IBAN…
 - Tekil ve çoklu içerik; taslak, zamanlanmış yayın, önizleme, sürüm geçmişi, kopyalama
 - Web kurulum sihirbazı (kurulum kilidiyle); SQLite veya MySQL; şema sürümleme ve otomatik yükseltme

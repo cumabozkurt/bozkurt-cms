@@ -107,6 +107,7 @@ function bolum(string $t): void
 }
 
 // Veritabanı: varsayılan SQLite. MySQL için: BZ_TEST_MYSQL="sunucu;port;veritabani;kullanici;sifre" php testler/kapsamli.php
+// UYARI: MySQL modunda verilen veritabanındaki TÜM tablolar silinir. Yalnızca boş, teste ayrılmış bir veritabanı kullanın.
 $dbAyar = ['surucu' => 'sqlite'];
 if ($my = getenv('BZ_TEST_MYSQL')) {
     [$h, $pt, $dn, $du, $dp] = array_pad(explode(';', $my), 5, '');
@@ -234,6 +235,7 @@ k($r['kod'] === 401, 'MCP anahtarsız reddedilir');
 
 bolum('Formlar, yönlendirmeler, 404');
 $r = $z->istek('GET', "$B/iletisim");
+k(str_contains($r['govde'], 'href="/kvkk" target="_blank" rel="noopener">Aydınlatma Metni</a>') && !str_contains($r['govde'], 'kvkkAydınlatma'), 'KVKK onay kutusunda Aydınlatma Metni bağlantısı doğru');
 preg_match('/name="_bz_t" value="([^"]+)"/', $r['govde'], $m);
 sleep(3);
 $r = $z->istek('POST', "$B/iletisim", ['_bz_form' => 'iletisim', '_bz_t' => $m[1] ?? '', 'ad_soyad' => '=HYPERLINK("http://kotu")', 'eposta' => 'a@b.com', 'mesaj' => 'Selam', 'kvkk_onay' => '1', 'iys_onay' => '1']);
@@ -318,6 +320,11 @@ $r = $z->istek('POST', "$B/odeme/paytr-bildirim", ['merchant_oid' => 'x', 'statu
 k($r['kod'] !== 200 || !str_contains($r['govde'], 'OK') , 'Sahte PayTR bildirimi kabul edilmez');
 
 bolum('Kötü niyetli saldırgan senaryoları');
+$a->istek('POST', "$B/yonetim/?s=duzenle&sablon=blog", ['_csrf' => $T, 'eylem' => 'yayinla', 'baslik' => 'Kötü </script><script>alert(1337)</script>', 'slug' => 'ld-xss',
+    'alan[icerik]' => '<p>x</p><a href="' . "\x01" . 'javascript:alert(2)">y</a>']);
+$r = $z->istek('GET', "$B/blog/ld-xss");
+k($r['kod'] === 200 && !str_contains($r['govde'], '<script>alert(1337)</script>') && str_contains($r['govde'], 'application/ld+json'), 'Başlık JSON-LD/ekmek kırıntısından betik bloğunu kıramaz');
+k(!preg_match('/href="\s*javascript:/i', $r['govde']), 'Kontrol karakterli javascript: bağlantısı temizlenir');
 $r = $z->istek('GET', "$B/ara?q=" . rawurlencode('"><script>alert(1)</script>'));
 k(!str_contains($r['govde'], '<script>alert(1)'), 'Yansıyan XSS (arama) yok');
 $r = $z->istek('GET', "$B/blog?kategori=" . rawurlencode("' OR 1=1 --") . '&sayfa=' . rawurlencode('1 UNION SELECT 1'));
