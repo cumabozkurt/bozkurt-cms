@@ -32,7 +32,7 @@ durumlarda geçerlidir. Kural ihlallerini **info@cumabozkurt.tr** adresine bildi
 biçimde incelenir, bildirenin gizliliğine saygı gösterilir. Yöneticiler ihlalin ağırlığına göre düzeltme, uyarı,
 geçici veya kalıcı uzaklaştırma kararı verebilir.
 
-Bu metin [Contributor Covenant 2.1](https://www.contributor-covenant.org/tr/version/2/1/code_of_conduct/)'den uyarlanmıştır.
+Bu metin [Contributor Covenant 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)'den uyarlanmıştır.
 
 ---
 
